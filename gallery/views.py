@@ -47,10 +47,10 @@ def cargaVenta(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
     content = body["param"]
-    #print(content)
+    print(content)
     
     producto = models.Producto.objects.get(foto=content)
-    #print(producto.nombre)
+    print(producto.nombre)
     venta = models.Venta.objects.create(precio = producto.precio, fecha = time.strftime("%H:%M:%S"),Observaciones = "", cantidad_unidades = 1, caja = 1)
      
     #Revisar 

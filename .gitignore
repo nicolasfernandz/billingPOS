@@ -3,3 +3,5 @@
 settings.py
 processed_thumbnail_files
 temporary_uploads
+gallery/migrations/0001_initial.py
+*/migrations/*
