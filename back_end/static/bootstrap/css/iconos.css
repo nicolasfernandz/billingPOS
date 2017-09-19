@@ -1,0 +1,164 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "iconos";
+  src:url("../fonts/iconos.eot");
+  src:url("../fonts/iconos.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/iconos.woff") format("woff"),
+    url("../fonts/iconos.ttf") format("truetype"),
+    url("../fonts/iconos.svg#iconos") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[data-icon]:before {
+  font-family: "iconos" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "iconos" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  vertical-align: sub;
+}
+
+.icon-user:before {
+  content: "\61";
+}
+.icon-tele:before {
+  content: "\62";
+}
+.icon-mujer:before {
+  content: "\63";
+}
+.icon-aire:before {
+  content: "\64";
+}
+.icon-electricista-2:before {
+  content: "\65";
+}
+.icon-pago:before {
+  content: "\66";
+}
+.icon-twit-1:before {
+  content: "\67";
+}
+.icon-vinieta-01:before {
+  content: "\68";
+}
+.icon-vinieta-02:before {
+  content: "\69";
+}
+.icon-vinieta-03:before {
+  content: "\6a";
+}
+.icon-lavanderia:before {
+  content: "\6b";
+}
+.icon-lavanderia-2:before {
+  content: "\6c";
+}
+.icon-limpieza:before {
+  content: "\6d";
+}
+.icon-muebles:before {
+  content: "\6e";
+}
+.icon-pintura-2:before {
+  content: "\6f";
+}
+.icon-sanitaria-2:before {
+  content: "\70";
+}
+.icon-inst-1:before {
+  content: "\71";
+}
+.icon-tecnico-2:before {
+  content: "\72";
+}
+.icon-hombre:before {
+  content: "\73";
+}
+.icon-gplus-1:before {
+  content: "\74";
+}
+.icon-flecha:before {
+  content: "\75";
+}
+.icon-face-1:before {
+  content: "\76";
+}
+.icon-editar:before {
+  content: "\77";
+}
+.icon-direccion:before {
+  content: "\78";
+}
+.icon-detalles:before {
+  content: "\79";
+}
+.icon-borrar:before {
+  content: "\41";
+}
+.icon-agendar:before {
+  content: "\42";
+}
+.icon-extra-heladera:before {
+  content: "\43";
+}
+.icon-extra-horno:before {
+  content: "\44";
+}
+.icon-extra-ventanas:before {
+  content: "\45";
+}
+.icon-extra-lava-ropa:before {
+  content: "\46";
+}
+.icon-face-01:before {
+  content: "\47";
+}
+.icon-gplus-01:before {
+  content: "\48";
+}
+.icon-twit-01:before {
+  content: "\49";
+}
+.icon-info:before {
+  content: "\4a";
+}
+.icon-check-01:before {
+  content: "\7a";
+}
+.icon-info-2:before {
+  content: "\4c";
+}
+.icon-delete:before {
+  content: "\4d";
+}
+.icon-vinieta-04:before {
+  content: "\4e";
+}
+.icon-mudanza:before {
+  content: "\4b";
+}
+.icon-menu-02:before {
+  content: "\4f";
+}

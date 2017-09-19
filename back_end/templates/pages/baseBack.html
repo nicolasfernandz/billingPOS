@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+
+ 	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Sistema de Gestión</title>
+	   <link href="{% static 'graficas/morris.css' %}" rel="stylesheet">
+    
+    <!--  Bootstrap Core CSS -->   
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'bootstrap/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+	<link href="{% static 'bootstrap/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+	
+	
+    <!-- Custom Fonts -->
+	<link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+
+    <link href="{% static 'bootstrap/css/styles.css' %}" rel="stylesheet" type="text/css">
+
+	<!-- DataTables -->
+	 <link href="{% static 'bootstrap/dataTables/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+
+
+    <!-- FUENTES -->
+    <!--<link href='https://fonts.googleapis.com/css?family=Work+Sans:200,300,400,500,600,700' rel='stylesheet' type='text/css'>-->
+    
+    <link href="{% static 'bootstrap/css/iconos.css' %}" rel="stylesheet" type='text/css'>
+
+
+    <!-- Bootstrap -->
+    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+    
+    <!-- Estilos Propios -->
+ 	<link href="{% static 'bootstrap/css/estilos.css' %}" rel="stylesheet">
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+    
+    
+    <!-- Include all compiled plugins (below) 
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>-->
+
+    <!-- FUNCIONES -->
+	<script src="{% static 'bootstrap/js/funciones.js' %}"></script>
+	
+	
+    <!-- SCROLL SUAVE-->
+	<script src="{% static 'bootstrap/js/funciones.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'bootstrap/js/jquery.simplr.smoothscroll.min.js' %}"></script>
+	
+	   
+    <script type="text/javascript" src="{% static 'bootstrap/js/slick.min.js' %}"></script>
+    <link href="{% static 'bootstrap/css/slick.css' %}" rel="stylesheet"  type="text/css" >
+    <link href="{% static 'bootstrap/css/slick-theme.css' %}" rel="stylesheet"  type="text/css" >
+
+    <!-- EFECTO PARALLAX -->
+	<script src="{% static 'bootstrap/js/parallax.min.js' %}"></script>
+    
+    
+    <!-- LOADER -->
+    <script src="{% static 'bootstrap/js/pace.min.js' %}" type="text/javascript" charset="utf-8"></script>
+	<link href="{% static 'bootstrap/css/dataurl.css' %}" rel="stylesheet">
+
+
+{% block encabezado %}{% endblock %}
+
+</head>
+
+<body>
+{% block modal %}{% endblock %}
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/gestionArt/home">{% block title %}{% endblock %}</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">            
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <!-- <ul class="dropdown-menu dropdown-user"> -->
+                    <ul class="dropdown-menu dropdown-messages">
+                        <li>
+                        	<a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li>
+                        	<a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                        	<a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="/gestionArt/home"><i class="fa fa-dashboard fa-fw"></i> Inicio</a>
+                        </li>
+                        
+                        
+                        
+                        
+                        
+                        
+                    
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+        
+        
+        
+         <!-- Aca va todo el contenido de la pagina-->
+            {% block content %}{% endblock %}
+            
+            
+        </div>
+
+        </div>
+        <!-- /#page-wrapper -->
+
+
+ {% block jqueryBody %}{% endblock %}
+    
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="{% static 'bootstrap/metisMenu/metisMenu.min.js' %}"></script>
+
+    <!-- Custom Theme JavaScript  -->
+    <script src="{% static 'bootstrap/dist/js/sb-admin-2.js' %}"></script>
+    
+	<script src="{% static 'bootstrap/js/jquery.dataTables.min.js' %}"></script> 
+	
+</body>
+
+<footer>
+<br></br>
+<hr width="75%" size="9"  style="color: #0056b2;" />
+ <div class="footer-bottom" style="text-align:center">
+        <div class="container" style="text-align:center">
+            <p> Copyright © <strong>dinnpro</strong> - All right reserved. </p>
+        </div>
+    </div>
+</footer>
+
+</html>

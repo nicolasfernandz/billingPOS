@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %} Prueba {% endblock %}
+{% block head %}<meta charset="utf-8">{% endblock %}
+{% load staticfiles %}
+
+
+{% block content %}
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Imprimiendo factura...</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>La venta se ha registrado con éxito</p>
+      </div>
+      <div class="modal-footer">
+       
+      </div>
+    </div>
+  </div>
+</div>
+	
+	
+{% csrf_token %}
+<script type="text/javascript">
+
+
+function guardarDatos(url){
+	
+	var c = url;
+	 var count;
+     $.ajax({
+         type: "POST",
+         url: "/ventas/cargaVenta/",
+         //url: "~/Vistas/SistemaDeGestion/Controladores/Controlador_Reserva/AuxBusquedaSocio", 
+         data:JSON
+         .stringify({'param':c}), // passing the parameter 
+         contentType: "application/json; charset=utf-8",
+         dataType: "json",
+         async: false,
+         error: function (XMLHttpRequest, textStatus, errorThrown) {
+             //alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+             //alert(XMLHttpRequest.status);
+             //alert(XMLHttpRequest.responseText);
+           // alert(XMLHttpRequest.errorThrown);             
+         },
+         success: function (result) {
+        	
+        	 count = result;
+         }
+     });
+     var a = count;
+      
+     $('#myModal').modal();
+     setTimeout(function() {$('#myModal').modal('hide');}, 2000);
+     
+}
+function abrirCerrarCaja(){
+	
+	var clase = document.getElementById('abrirCerrarCaja').className;
+	if(clase == 'btn btn-danger'){
+	document.getElementById('abrirCerrarCaja').className = 'btn btn-success';
+	document.getElementById('abrirCerrarCaja').value = 'Abrir Caja'; 
+	}
+	if(clase == 'btn btn-success'){
+		document.getElementById('abrirCerrarCaja').className = 'btn btn-danger';
+		document.getElementById('abrirCerrarCaja').value = 'Cerrar Caja'; 
+		}
+	
+}
+</script>
+	<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+		<!--  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-ejemplo" aria-controls="navbar-ejemplo" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>-->
+		<a class="navbar-brand" href="#">Bar7a</a>
+
+		<div class="collapse navbar-collapse" id="navbar-ejemplo">
+			<span class="navbar-text">
+				Caja 1
+			</span>
+			
+		</div>
+		<input id="abrirCerrarCaja" type="button" class="btn btn-success" value="Abrir Caja" onclick="abrirCerrarCaja();" />
+	</nav>
+
+	<div class="album text-muted">
+		<div class="container">
+			<div class="row">
+
+				{% for file in all_products %}
+					  {% with image='gallery/img/'|add:file.0 %} 
+						<div class="card" style="width: 10rem;"> 
+						
+							<a href="javascript:guardarDatos('{{file.0}}')">
+							
+							 <img class="img-fluid" src="{% static image %}"/> 
+								<div class="card-body" align="center">
+   									<h4 class="card-title">{{file.1}}</h4>
+								</div>
+							</a>
+						</div>
+					{% endwith %}
+				{% empty %}
+					<h2>No imagenes disponibles!</h2>
+				{%endfor%}	
+
+			</div>
+		</div>
+	</div>	
+
+
+{% endblock %}
+
+{% block footer %}
+<footer class="text-muted">
+	<div class="container">
+		<p>Dinnpro</p>
+	</div>
+</footer>
+
+{% endblock %}
