@@ -184,4 +184,10 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+#Nuestros Dinnpro
+*.pyc
+settings.py
+processed_thumbnail_files
+temporary_uploads
+
 # End of https://www.gitignore.io/api/python,eclipse,windows
