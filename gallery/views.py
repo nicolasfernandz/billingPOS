@@ -52,9 +52,9 @@ def cargaVenta(request):
     producto = models.Producto.objects.get(foto=content)
     #print(producto.nombre)
     venta = models.Venta.objects.create(precio = producto.precio, fecha = time.strftime("%H:%M:%S"),Observaciones = "", cantidad_unidades = 1, caja = 1)
-    
-    models.Linea_Venta.objects.create(Producto = producto, Venta  = venta )
-    
+     
+    #Revisar 
+    models.Linea_Venta.objects.create(Producto = producto, Venta = venta)
     return render(request,'gallery/index.html', {})
 
 
