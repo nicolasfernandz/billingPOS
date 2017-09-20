@@ -42,7 +42,7 @@ class Index(TemplateView):
             context['images'] = []
         return context
 
-def cargaVenta(request):
+def cargaVenta(request, caja_id):
     
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
@@ -50,7 +50,7 @@ def cargaVenta(request):
     print(content)
     
     producto = models.Producto.objects.get(foto=content)
-    print(producto.nombre)
+    #print(producto.nombre)
     venta = models.Venta.objects.create(precio = producto.precio, fecha = time.strftime("%H:%M:%S"),Observaciones = "", cantidad_unidades = 1, caja = 1)
      
     #Revisar 
