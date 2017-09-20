@@ -88,7 +88,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/gestionArt/home">{% block title %}{% endblock %}</a>
+                <a class="navbar-brand" href="/back_end">{% block title %}{% endblock %}</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -118,12 +118,82 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="/gestionArt/home"><i class="fa fa-dashboard fa-fw"></i> Inicio</a>
+                            <a href="/back_end"><i class="fa fa-dashboard fa-fw"></i> Inicio</a>
+                        </li>
+                        <!-- nicolasfernandz ini -->
+                        <li>
+                            <a href="/back_end/caja">
+                            	<i class="glyphicon glyphicon glyphicon-home"></i>
+                            	Apertura de Día<span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="/back_end/caja/nuevaAperturaCaja">Nuevo Apertura de Día</a>
+                                   
+                                </li>
+                                <li>
+                                    <a href="/back_end/caja/cajasList/">Informe</a>
+                                </li>
+                                
+                            </ul>
+                            <!-- /.nav-second-level -->
                         </li>
                         
+                        <li>
+                            <a href="/back_end">
+                            	<i class="glyphicon glyphicon-shopping-cart"></i>
+                            	Aperturas y Cierres de Caja<span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="/gestionArt/ganado/newGanado">Nuevo Apertura de Caja</a>
+                                </li>
+                                <li>
+                                    <a href="/gestionArt/ganado/newGanado">Nuevo Cierre de Caja</a>
+                                </li>
+                                <li>
+                                    <a href="/gestionArt/ganado/ganadoList/">Informes</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                         
+                        <li>
+                            <a href="/back_end">
+                            	<i class="glyphicon glyphicon glyphicon-book"></i>
+                            	Informes X y Z<span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="/gestionArt/ganado/newGanado">Nuevo Informe X</a>
+                                </li>
+                                <li>
+                                    <a href="/gestionArt/ganado/ganadoList/">Nuevo Informe Z</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                                                
+                        <li>
+                            <a href="/back_end">
+                            	<i class="glyphicon glyphicon glyphicon-scale"></i>
+                            	Reportes<span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="/gestionArt/ganado/newGanado">Ventas por producto</a>
+                                </li>
+                                <li>
+                                    <a href="/gestionArt/ganado/ganadoList/">Ventas por cajas</a>
+                                </li>
+                                <li>
+                                    <a href="/gestionArt/ganado/ganadoList/">Ventas por mes</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                         
-                        
+                        <!-- nicolasfernandz fin -->                        
                         
                         
                     
