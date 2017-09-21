@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.conf.urls import url
 from django.views.generic import TemplateView
 from django.conf import settings
-from gallery.models import Producto
+from gallery.models import Producto, AperturaCaja
 from .forms import *
 import os
 from gallery import models
@@ -42,7 +42,7 @@ class Index(TemplateView):
             context['images'] = []
         return context
 
-def cargaVenta(request, caja_id):
+def cargaVenta(request):
     
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
@@ -51,7 +51,7 @@ def cargaVenta(request, caja_id):
     
     producto = models.Producto.objects.get(foto=content)
     #print(producto.nombre)
-    venta = models.Venta.objects.create(precio = producto.precio, fecha = time.strftime("%H:%M:%S"),Observaciones = "", cantidad_unidades = 1, caja = 1)
+    venta = models.Venta.objects.create(precio = producto.precio, fecha = time.strftime("%H:%M:%S"),Observaciones = "", cantidad_unidades = 1, AperturaCaja_id = 1)
      
     #Revisar 
     models.Linea_Venta.objects.create(Producto = producto, Venta = venta)

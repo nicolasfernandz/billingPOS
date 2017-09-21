@@ -4,8 +4,16 @@
 {% block title %}Sistema Facturacion{% endblock %}
  
  {% block content %}
+ 
+ {% load static %}
  <head>
    <meta charset="utf-8">
+   
+    <!-- DataTables CSS -->
+    <link href="{% static 'datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css' %}" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="{% static 'datatables-responsive/css/dataTables.responsive.css' %}" rel="stylesheet">
    
  </head>
  
@@ -34,6 +42,7 @@
           -->
           <!-- nicolasfernandz fin -->
             <!-- /.row -->
+            
 		</br>
 		 <div class="row">
                 <div class="col-lg-12 col-md-6">
@@ -86,10 +95,21 @@
                 </div>
 				
 			</div>
+			
+			 <!-- 
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Blank</h1>
+                    </div>
+                </div>
+            </div>
+            -->
+            
 	{% endblock %}
 
-
 {% block encabezado %}
+
 </body>
 
 <script type="text/javascript">
@@ -105,5 +125,14 @@
 		otable = $("#tablaClients").dataTable();
 		document.getElementById('cant_clients').innerHTML = otable.fnSettings().fnRecordsDisplay();
 	}
+</script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+$(document).ready(function() {
+    $('#tablaClients').DataTable({
+        responsive: true
+        });
+});
 </script>
 {% endblock %}

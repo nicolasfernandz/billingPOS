@@ -7,4 +7,7 @@ admin.site.register(Producto)
 admin.site.register(Venta)
 admin.site.register(Dia)
 admin.site.register(Caja)
+
 admin.site.register(AperturaCaja)
+
+    
