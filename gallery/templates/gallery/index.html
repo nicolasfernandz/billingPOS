@@ -49,6 +49,26 @@
     </div>
   </div>
 </div>
+
+<div id="modal_error" class="modal fade" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <div class="alert alert-danger" role="alert">
+  <strong>Error!</strong> Se ha producido un error al realizar la venta.
+</div>
+      </div>
+      <div class="modal-footer">
+       
+      </div>
+    </div>
+  </div>
+</div>
 	
 	
 {% csrf_token %}
@@ -72,17 +92,19 @@ function guardarDatos(url){
              //alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
              //alert(XMLHttpRequest.status);
              //alert(XMLHttpRequest.responseText);
-           // alert(XMLHttpRequest.errorThrown);             
+           // alert(XMLHttpRequest.errorThrown);   
+        	 $('#modal_error').modal();
+             setTimeout(function() {$('#modal_error').modal('hide');}, 2000);
          },
          success: function (result) {
         	
         	 count = result;
+        	 $('#myModal').modal();
+             setTimeout(function() {$('#myModal').modal('hide');}, 2000);
          }
      });
      var a = count;
       
-     $('#myModal').modal();
-     setTimeout(function() {$('#myModal').modal('hide');}, 2000);
      
 }
 function abrirCerrarCaja(){
