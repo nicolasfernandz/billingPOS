@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container" align="center">
+            <h1>Sistema billingPOS</h1>
+            <h1>7A Bar</h1>
+            <div style="width:30%">
+       			 <form method="post" action="{% url 'login' %}">
+                 	{%csrf_token%}
+                    
+                    {% for error in form.non_field_errors %}
+                    <div class="form-group has-errors text-danger small">
+                        {{error}}
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="form-group has-errors text-danger small">
+                        {{field.errors}}
+                    </div>
+                    
+                    <div class="imgcontainer">
+    					<img src="{{ Bar7aLogo.PNG }}" alt="7A Bar" >
+  					</div>
+                    
+                    <div class="form-group">                    
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+							<input id="login-username" type="text" class="form-control" name="username" value="" placeholder="username">                                        
+						</div>
+	                    <div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							<input id="login-password" type="password" class="form-control" name="password" placeholder="password">
+						</div>
+					</div>
+                                       
+                    <button class="btn btn-primary" style="width:100%">Login</button>
+            		<br></br>
+					
+					<div class="row">
+               			<div class="col-lg-6 col-md-6">
+							<button class="btn btn-danger" style="width:100%">Cancel</button>
+						</div>
+						<div class="col-lg-6 col-md-6">	
+							<span class="psw"><a href="{% url 'password_reset' %}">Lost password?</a></span>
+						</div>
+					</div>
+  				</form>
+			</div>
+        </div>
+    </body>
+    <footer>
+        <div class="container">
+            <div class="row">
+                
+                    <hr class="small">
+                    <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h4><strong>Dinnpro</strong></h4>
+                    <ul class="list-unstyled"> 
+                        <li><i class="fa fa-phone fa-fw"></i> (+598) 98 900 783</li>
+                        <li><i class="fa fa-envelope-o fa-fw"></i> <a href="mailto:info@dinnpro.com">info@dinnpro.com</a>
+                        </li>
+                    </ul>
+                    <p class="text-muted">Copyright &copy; Dinnpro 2017</p>
+                </div>
+            </div>
+        </div>
+        <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+    </footer>
+    
+</html>

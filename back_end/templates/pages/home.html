@@ -1,0 +1,138 @@
+ 
+{% extends "pages/baseBack.html" %}
+
+{% block title %}Sistema Facturacion{% endblock %}
+ 
+ {% block content %}
+ 
+ {% load static %}
+ <head>
+   <meta charset="utf-8">
+   
+    <!-- DataTables CSS -->
+    <link href="{% static 'datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css' %}" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="{% static 'datatables-responsive/css/dataTables.responsive.css' %}" rel="stylesheet">
+   
+ </head>
+ 
+ <body onload="show_cant_clients();" >
+			<!-- Search -->	
+			<!-- nicolasfernandz ini -->
+			<!--
+            <div class="row">
+                <div class="col-lg-9">
+                    <h1 class="page-header">Sistema de Facturación Bar7a</h1>
+                    <ul class="my-page-header nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="tables.html">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div> 
+                            
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          -->
+          <!-- nicolasfernandz fin -->
+            <!-- /.row -->
+            
+		</br>
+		 <div class="row">
+                <div class="col-lg-12 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row" >
+                                <div class="col-xs-2">
+									<div class="col-xs-12">
+										<i class="glyphicon glyphicon-search fa-3x" id="iconTareas"></i>
+									</div>	
+                                </div>
+								<div id= 'estadoclients' class="col-xs-7"> 
+									<h1>---->  HOME  <----</h1> 
+									
+								</div>
+                                <div class="col-xs-3 text-right">
+                                    <div class="huge" id="cant_clients">                             
+                                   
+                                   							
+                                    </div>
+                                    <div id="filtroVehicles">Cantidad Ventas!</div>
+                                </div>
+                            </div>
+                        </div>
+						<div class="panel-body">
+						 <!-- Table -->
+							<table class="table table-hover" id="tablaClients">
+								<thead>
+							<td><strong>Producto</strong></td>
+									<td><strong>Precio</strong></td>
+									<td><strong>Fecha</strong></td>
+									<td><strong>Unidades</strong></td>
+									<td><strong>id_factura</strong></td>
+								</thead>
+								<tbody>
+							{% for venta in all_ventas %}
+									<tr>
+										<td><strong><a href=""> {{ venta.Producto.nombre }} </a> </strong></td>
+										<td><strong><a href=""> {{ venta.Venta.precio }} </a> </strong></td>
+										<td><strong><a href=""> {{ venta.Venta.fecha|date:"d-m-Y H:i:s" }} </a> </strong></td>
+										<td><strong><a href=""> {{ venta.Venta.cantidad_unidades}} </a></strong></td>
+										<td><strong><a href=""> {{ venta.id}} </a></strong></td>
+										
+									</tr>
+									{% endfor %}
+								</tbody>
+						  </table>
+						</div>
+                    </div>
+                </div>
+				
+			</div>
+			
+			 <!-- 
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Blank</h1>
+                    </div>
+                </div>
+            </div>
+            -->
+            
+	{% endblock %}
+
+{% block encabezado %}
+
+</body>
+
+<script type="text/javascript">
+    $(function () {
+    	otable = $("#tablaClients").dataTable();
+    	 
+    	//Setting number of filtered rows into a div
+    	//show_cant_vehicles();
+    })
+    
+    function show_cant_clients() {
+		//Setting number of filtered rows in div		
+		otable = $("#tablaClients").dataTable();
+		document.getElementById('cant_clients').innerHTML = otable.fnSettings().fnRecordsDisplay();
+	}
+</script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+$(document).ready(function() {
+    $('#tablaClients').DataTable({
+        responsive: true
+        });
+});
+</script>
+{% endblock %}

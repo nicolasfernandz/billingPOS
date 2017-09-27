@@ -63,8 +63,10 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configuración</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión</a>
+                        <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión</a>
                         </li>
+                        </li>
+                       
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -104,28 +106,36 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        {% load permission_tags %}
+
+					{% if user|has_role:'encargado' %}
                         <li>
                             <a href="#"><i class="glyphicon glyphicon glyphicon-book"></i> Informes X y Z<span class="fa arrow"></span>
                             </a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="/gestionArt/ganado/newGanado">Nuevo Informe X</a>
+                                    <a href="/back_end/informe_x">Nuevo Informe X</a>
                                 </li>
+                         
                                 <li>
-                                    <a href="/gestionArt/ganado/ganadoList/">Nuevo Informe Z</a>
+                                    <a href="/back_end/informe_z">Nuevo Informe Z</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        	{% endif %}
+
                         <li>
                             <a href="#">
                                 <i class="glyphicon glyphicon glyphicon-scale"></i>
                                 Reportes<span class="fa arrow"></span>
                             </a>
                             <ul class="nav nav-second-level">
+						{% if user|has_role:'contador' %}
                                 <li>
-                                    <a href="/gestionArt/ganado/newGanado">Ventas por producto</a>
+                                    <a href="/back_end/reporte_ventas_producto">Ventas por producto</a>
                                 </li>
+                        {% endif %}
                                 <li>
                                     <a href="/gestionArt/ganado/ganadoList/">Ventas por cajas</a>
                                 </li>
