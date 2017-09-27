@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %} Prueba {% endblock %}
+{% block title %} Sistema Facturación {% endblock %}
 {% block head %}<meta charset="utf-8">{% endblock %}
 {% load staticfiles %}
 
 
 {% block content %}
+
 <div class="modal fade" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -54,6 +55,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
+      <h5>Error en la Venta</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -70,13 +72,57 @@
   </div>
 </div>
 	
-	
+<div id="caja_cerrada" class="modal fade" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h5>Caja Cerrada</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+       <div class="alert alert-danger" role="alert">
+  <strong>Error!</strong> No se pueden realizar ventas, la caja esta cerrada.
+</div>
+      </div>
+      <div class="modal-footer">
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="día_cerrado" class="modal fade" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h5>Día Cerrado</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+       <div class="alert alert-danger" role="alert">
+  <strong>Error!</strong> No se pueden abrir la caja, día cerrado.
+</div>
+      </div>
+      <div class="modal-footer">
+       
+      </div>
+    </div>
+  </div>
+</div>	
 {% csrf_token %}
+<input id='apertura_caja' type="hidden" name="apertura_caja" value="caja_cerrada">
 <script type="text/javascript">
 
 
 function guardarDatos(url){
-	
+	var caja = document.getElementById('apertura_caja').value;
+	if(caja == 'caja_abierta'){
 	var c = url;
 	 var count;
      $.ajax({
@@ -104,7 +150,11 @@ function guardarDatos(url){
          }
      });
      var a = count;
-      
+	}else{
+		
+		 $('#caja_cerrada').modal();
+		 setTimeout(function() {$('#caja_cerrada').modal('hide');}, 2000);
+	}
      
 }
 function abrirCerrarCaja(){
@@ -113,11 +163,74 @@ function abrirCerrarCaja(){
 	if(clase == 'btn btn-danger'){
 	document.getElementById('abrirCerrarCaja').className = 'btn btn-success';
 	document.getElementById('abrirCerrarCaja').value = 'Abrir Caja'; 
+	document.getElementById('apertura_caja').value = 'caja_cerrada';
 	}
+	
 	if(clase == 'btn btn-success'){
-		$('#login_modal').modal();
-		document.getElementById('abrirCerrarCaja').className = 'btn btn-danger';
-		document.getElementById('abrirCerrarCaja').value = 'Cerrar Caja'; 
+		
+		 var today = new Date();
+		 var dd = today.getDate();
+		 var mm = today.getMonth()+1; //January is 0!
+		 var yyyy = today.getFullYear();
+		 var hh = today.getHours();
+         var min = today.getMinutes();
+         var ss = today.getSeconds();
+		 if(dd<10) {
+			    dd = '0'+dd
+			} 
+		 if(mm<10) {
+			    mm = '0'+mm
+			}
+		 if(min<10) {
+			    min = '0'+min
+			}
+		 if(hh<10) {
+			    hh = '0'+hh
+			}
+		 if(ss<10) {
+			    ss = '0'+ss
+			}
+		 var fec = yyyy+"-"+mm+"-"+dd+" "+hh+":"+min+":"+ss;
+		 $.ajax({
+	         type: "POST",
+	         url: "/ventas/aperturaCaja/",
+	         //url: "~/Vistas/SistemaDeGestion/Controladores/Controlador_Reserva/AuxBusquedaSocio", 
+	         data:JSON
+	         .stringify({'param':fec}), // passing the parameter 
+	         contentType: "application/json; charset=utf-8",
+	         dataType: "json",
+	         async: false,
+	         error: function (XMLHttpRequest, textStatus, errorThrown) {
+	             //alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+	             //alert(XMLHttpRequest.status);
+	             //alert(XMLHttpRequest.responseText);
+	           // alert(XMLHttpRequest.errorThrown);   
+	        	
+	         },
+	         success: function (result) {
+	        	
+	        	 if(result == 'permitirAperturaCaja'){
+	        	 $('#login_modal').modal();
+	        	 document.getElementById('abrirCerrarCaja').className = 'btn btn-danger';
+		    	 document.getElementById('abrirCerrarCaja').value = 'Cerrar Caja'; 
+		    	 document.getElementById('apertura_caja').value = 'caja_abierta';
+	        	 }else{
+	        		
+	        		 $('#día_cerrado').modal();
+
+	        		 setTimeout(function() {$('#día_cerrado').modal('hide');}, 2000);
+	 	        	document.getElementById('abrirCerrarCaja').className = 'btn btn-success';
+	 	        	document.getElementById('abrirCerrarCaja').value = 'Abrir Caja'; 
+	 	        	document.getElementById('apertura_caja').value = 'caja_cerrada';
+	        		 
+	        		 
+	        	 }
+	         }
+	     });
+		
+		//Se llama al modal para que se haga el login 
+		
+		
 		}
 	
 }

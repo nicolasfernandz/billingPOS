@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.conf.urls import url
 from django.views.generic import TemplateView
 from django.conf import settings
-from gallery.models import Producto, AperturaCaja
+from gallery.models import *
 from .forms import *
 import os
 from gallery import models
@@ -69,3 +69,18 @@ def some_view(request):
     writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
 
     return response
+
+def aperturaCaja(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    content = body["param"]
+    
+    print(content)
+    apertura_dia = models.Dia.objects.filter(fecha_apertura__lte=content, fecha_cierre__gt=content)    
+    print(apertura_dia.first())
+    if apertura_dia.first() is not None:
+        print('jojojojojo')
+        return HttpResponse(json.dumps('permitirAperturaCaja'), content_type="application/json")
+    
+    return HttpResponse(json.dumps('denegarAperturaCaja'), content_type="application/json")
+    
