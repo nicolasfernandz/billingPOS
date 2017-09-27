@@ -18,6 +18,12 @@ urlpatterns = [
     
 #    url(r'^login', views.login),
     
-
+    url(r'^newOpeningDay', views.newOpeningDay, name = 'New Opening Day'),
+    
+    url(r'^newCloseDay', views.newCloseDay, name = 'New Close Day'),
+    
+    url(r'^saveOpeningDay/', views.saveOpeningDay, name = 'Save Opening Day'),
+    
+    url(r'^saveClosingDay/', views.saveClosingDay, name = 'Save Closing Day'),
 
 ]
