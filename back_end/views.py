@@ -31,6 +31,7 @@ from django.shortcuts import redirect
 def login_success(request):
    # Redirects users based on whether they are in the admins group
     if request.user.groups.filter(name="barman").exists():
+        print (request.user.username)
         # user is an admin
         return redirect("/billingPOS")
     else:
