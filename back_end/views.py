@@ -29,18 +29,18 @@ from django.shortcuts import redirect
 
 @login_required
 def login_success(request):
-   # Redirects users based on whether they are in the admins group
+    # Redirects users based on whether they are in the admins group
     if request.user.groups.filter(name="barman").exists():
         print (request.user.username)
         # user is an admin
         return redirect("/billingPOS")
     else:
-        all_ventas = Linea_Venta.objects.all().order_by('-id')
+        #all_ventas = Linea_Venta.objects.all().order_by('-id')
         context = {
-            'all_ventas': all_ventas,
+            #'all_ventas': all_ventas,
         } 
         #return render(request, 'pages/home.html', context)
-        return redirect("/back_end/home.html", context)
+        return redirect("/back_end/home", context)
 
 @login_required    
 def home(request):

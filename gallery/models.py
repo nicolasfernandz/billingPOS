@@ -10,6 +10,8 @@ class Dia(models.Model):
 class Caja(models.Model):
     Descripcion = models.CharField(max_length =250)
     ubicacion = models.CharField(max_length =250)
+    modelo = models.CharField(max_length =250, null=True)
+    numero_serie = models.CharField(max_length =250, null=True)
     def __str__(self):
         return self.Descripcion + " - " + self.ubicacion
 
