@@ -29,6 +29,31 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    
+    <!-- NICO COPIE esto desde reporte_ventas_producto.html  INI -->
+    
+    <!-- Comentado, dado que bootstrap ya se importa mas arriba
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    -->
+    
+    <!-- Este es el script que da problemas, debemos descargarlo y sustituirlo por el que esta en scripts (abajo de todo) -->
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <!-- Estos son los js para la tabla -->
+	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.2.0/js/dataTables.responsive.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.2.0/js/responsive.bootstrap.min.js"></script>   	
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	 
+    <!-- Comentado, dado que bootstrap ya se importa mas arriba
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
+    
+	<!-- Estos son los css para la tabla -->
+	<link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="https://cdn.datatables.net/responsive/2.2.0/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+	
+	<!-- NICO COPIE esto desde reporte_ventas_producto.html  FIN -->
 
 {% block encabezado %}{% endblock %}
 
@@ -167,20 +192,23 @@
  {% block jqueryBody %}{% endblock %}
     
     <!-- jQuery -->
-    <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+    <!-- nico: Cambie a la version del reporte_ventas_producto
+    <script src="{% static 'jquery/dist/jquery.min.js' %}"></script> -->
+    
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="{% static 'metisMenu/dist/metisMenu.min.js' %}"></script>
+    <script src="{% static 'metisMenu/dist/metisMenu.min.js' %}"></script> 
 
     <!-- Custom Theme JavaScript -->
-    <script src="{% static 'dist/js/sb-admin-2.js' %}"></script>
+    <script src="{% static 'dist/js/sb-admin-2.js' %}"></script> 
 
-	    <!-- DataTables JavaScript -->
+	<!-- DataTables JavaScript -->
     <script src="{% static 'datatables/media/js/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js' %}"></script>
+     
 </body>
 
 <footer>
