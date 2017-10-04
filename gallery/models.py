@@ -20,7 +20,7 @@ class Caja(models.Model):
 class AperturaCaja(models.Model):
     Caja = models.ForeignKey(Caja, on_delete = models.CASCADE)
     fecha_apertura_Caja = models.DateTimeField(auto_now_add=True, blank=True)
-    fecha_cierre_Caja = models.DateTimeField(auto_now_add=True, blank=True)
+    fecha_cierre_Caja = models.DateTimeField(auto_now_add=False, blank=True)
 #    Dia = models.ForeignKey(Dia, on_delete = models.CASCADE)
 
 class Producto(models.Model):
@@ -30,10 +30,10 @@ class Producto(models.Model):
     aplica_impuesto = models.BooleanField()
 
     def __str__(self):
-        return self.nombre,self.precio
+        return self.nombre
         
 class PreciosProductoFecha(models.Model):
-    Producto = models.ForeignKey(Producto, on_delete = models.CASCADE)
+    Producto = models.ForeignKey(Producto, on_delete = models.CASCADE,related_name='prod')
     fecha_inicio = models.DateTimeField(auto_now_add=True, blank=True)
     fecha_fin = models.DateTimeField(auto_now_add=True, blank=True)
     precio_sin_iva = models.DecimalField(max_digits=15, decimal_places=2) 

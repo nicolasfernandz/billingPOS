@@ -120,17 +120,18 @@
 <script type="text/javascript">
 
 
-function guardarDatos(url){
+function guardarDatos(url, precio){
 	var caja = document.getElementById('apertura_caja').value;
 	if(caja == 'caja_abierta'){
 	var c = url;
+	var d = precio;
 	 var count;
      $.ajax({
          type: "POST",
-         url: "/ventas/cargaVenta/",
+         url: "/billingPOS/ventas/cargaVenta/",
          //url: "~/Vistas/SistemaDeGestion/Controladores/Controlador_Reserva/AuxBusquedaSocio", 
          data:JSON
-         .stringify({'param':c}), // passing the parameter 
+         .stringify({'param':c},{'a':d}), // passing the parameter 
          contentType: "application/json; charset=utf-8",
          dataType: "json",
          async: false,
@@ -193,7 +194,7 @@ function abrirCerrarCaja(){
 		 var fec = yyyy+"-"+mm+"-"+dd+" "+hh+":"+min+":"+ss;
 		 $.ajax({
 	         type: "POST",
-	         url: "/ventas/aperturaCaja/",
+	         url: "/billingPOS/ventas/aperturaCaja/",
 	         //url: "~/Vistas/SistemaDeGestion/Controladores/Controlador_Reserva/AuxBusquedaSocio", 
 	         data:JSON
 	         .stringify({'param':fec}), // passing the parameter 
@@ -247,6 +248,8 @@ function abrirCerrarCaja(){
 			</span>
 			
 		</div>
+		<a class="navbar-brand" href="url">Log Out</a>
+		 
 		<input id="abrirCerrarCaja" type="button" class="btn btn-success" value="Abrir Caja" onclick="abrirCerrarCaja();" />
 	</nav>
 
@@ -255,10 +258,11 @@ function abrirCerrarCaja(){
 			<div class="row">
 
 				{% for file in all_products %}
+				
 					  {% with image='gallery/img/'|add:file.0 %} 
 						<div class="card" style="width: 10rem;"> 
 						
-							<a href="javascript:guardarDatos('{{file.0}}')">
+							<a href="javascript:guardarDatos('{{file.0}}, {{file.1}}')">
 							
 							 <img class="img-fluid" src="{% static image %}"/> 
 								<div class="card-body" align="center">
@@ -273,6 +277,7 @@ function abrirCerrarCaja(){
 
 			</div>
 		</div>
+		
 	</div>	
 
 
@@ -283,6 +288,7 @@ function abrirCerrarCaja(){
 	<div class="container">
 		<p>Dinnpro</p>
 	</div>
+	
 </footer>
 
 {% endblock %}
