@@ -34,12 +34,14 @@ class Producto(models.Model):
         
 class PreciosProductoFecha(models.Model):
     Producto = models.ForeignKey(Producto, on_delete = models.CASCADE,related_name='prod')
-    fecha_inicio = models.DateTimeField(auto_now_add=True, blank=True)
-    fecha_fin = models.DateTimeField(auto_now_add=True, blank=True)
+    #fecha_inicio = models.DateTimeField(auto_now_add=True, blank=True)
+    #fecha_fin = models.DateTimeField(auto_now_add=True, blank=True)
+    fecha_inicio = models.DateTimeField(auto_now=False, auto_now_add=False)
+    fecha_fin = models.DateTimeField(auto_now=False, auto_now_add=False)    
     precio_sin_iva = models.DecimalField(max_digits=15, decimal_places=2) 
     
     def __str__(self):
-        return self.Producto.nombre,self.fecha_inicio, self.fecha_fin, self.precio_sin_iva
+        return "(%s, %s, %s, %s)" % (self.Producto.nombre,self.fecha_inicio, self.fecha_fin, self.precio_sin_iva)
     
 class ImpuestosProductoFecha(models.Model):
     Producto = models.ForeignKey(Producto, on_delete = models.CASCADE)
