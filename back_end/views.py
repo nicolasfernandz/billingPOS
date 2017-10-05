@@ -90,11 +90,12 @@ def reporte_ventas_producto(request):
     } 
     return render(request, 'pages/reporte_ventas_producto.html', context)
 
-
+'''
 def newOpeningDay (request):
     util = Utilities()
     util.todayDateTimeNow = Utilities().getTodayDateTimeNow()
     return render(request, 'pages/openingDay.html', {'util': util})
+
 
 def newCloseDay (request):
     util = Utilities()
@@ -200,4 +201,4 @@ def saveClosingDay(request):
             return render(request, 'pages/closeDay.html', {'errors': errors, 'util': util})
             
     #return redirect("/back_end/newOpeningDay")
-
+'''

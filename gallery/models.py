@@ -45,8 +45,8 @@ class PreciosProductoFecha(models.Model):
     
 class ImpuestosProductoFecha(models.Model):
     Producto = models.ForeignKey(Producto, on_delete = models.CASCADE)
-    fecha_inicio = models.DateTimeField(auto_now_add=True, blank=True)
-    fecha_fin = models.DateTimeField(auto_now_add=True, blank=True)
+    fecha_inicio = models.DateTimeField(auto_now=False, auto_now_add=False)
+    fecha_fin = models.DateTimeField(auto_now=False, auto_now_add=False)
     porcentaje_impuesto = models.DecimalField(max_digits=15, decimal_places=2) 
     
     def __str__(self):

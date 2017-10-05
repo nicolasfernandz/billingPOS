@@ -19,6 +19,13 @@ import datetime
 import time
 from django.utils import timezone
 
+from django.contrib.auth.decorators import login_required
+from rolepermissions.decorators import has_role_decorator
+# Create your views here.
+
+from django.contrib.auth import logout as auth_logout
+
+
 class Index(TemplateView):
     template_name='gallery/index.html'
 
