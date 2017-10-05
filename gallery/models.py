@@ -50,7 +50,7 @@ class ImpuestosProductoFecha(models.Model):
     porcentaje_impuesto = models.DecimalField(max_digits=15, decimal_places=2) 
     
     def __str__(self):
-        return self.Producto.nombre,self.fecha_inicio, self.fecha_fin, self.porcentaje_impuesto
+        return "(%s, %s, %s, %s)" % (self.Producto.nombre,self.fecha_inicio, self.fecha_fin, self.porcentaje_impuesto)
     
 # Create your models here.
 class Venta(models.Model):
