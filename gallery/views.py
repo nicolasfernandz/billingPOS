@@ -48,10 +48,17 @@ class Index(TemplateView):
                
                 #precio = models.PreciosProductoFecha.objects.filter(fecha_inicio__lte=auxTime, fecha_fin__gt=auxTime, Producto_id = item[1])
                 precio = models.PreciosProductoFecha.objects.all().filter(fecha_inicio__lte=auxTime, fecha_fin__gt=auxTime, Producto_id = item[1]).values_list('precio_sin_iva','id')    
+                impuesto = models.ImpuestosProductoFecha.objects.all().filter(fecha_inicio__lte=auxTime, fecha_fin__gt=auxTime, Producto_id = item[1]).values_list('porcentaje_impuesto','id')    
                 
+                #print(impuesto)
                 for elem in precio:
-                    print(elem[0])
-                    aux = (item[0], elem[0])
+                    prc = elem[0]
+                    for imp in impuesto:
+                        
+                        total_imp = (prc) * (imp[0]/100)
+                        prc =  prc + total_imp
+                    aux = (item[0], '{0:.4}'.format(prc))
+                    
                     prod.append(aux)
                     break
                  
