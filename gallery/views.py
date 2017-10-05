@@ -24,6 +24,13 @@ from rolepermissions.decorators import has_role_decorator
 # Create your views here.
 
 from django.contrib.auth import logout as auth_logout
+from django.template.context_processors import request
+
+from django.http import HttpResponse, HttpResponseRedirect
+
+def logout(request):
+    auth_logout(request)
+    return HttpResponseRedirect("/login/")
 
 class Index(TemplateView):
     template_name='gallery/index.html'
@@ -88,8 +95,8 @@ class Index(TemplateView):
         return context
 
 @login_required
-def get_context_data(self, **kwargs):
-        context = super(Index, self).get_context_data(**kwargs)
+def get_context_data(request):
+       # context = super(Index, self).get_context_data(**kwargs)
        # print('static root')
         #print (settings.STATIC_ROOT)
         try:
@@ -145,7 +152,7 @@ def get_context_data(self, **kwargs):
             # Si no hay ninguna imagen retornar un arreglo vacio
             print (e)
             context['images'] = []
-        return context
+        return render(request, 'gallery/index.html', context)
 
 def cargaVenta(request):
     
