@@ -25,11 +25,70 @@ from rolepermissions.decorators import has_role_decorator
 
 from django.contrib.auth import logout as auth_logout
 
-
 class Index(TemplateView):
     template_name='gallery/index.html'
 
     def get_context_data(self, **kwargs):
+        context = super(Index, self).get_context_data(**kwargs)
+       # print('static root')
+        #print (settings.STATIC_ROOT)
+        try:
+            # Lista todos los archivos contenidos en <STATIC_ROOT>/gallery/img
+            # <images> es una variable que se usara en el template <template_name>
+             
+            images = os.listdir(os.path.join(settings.STATIC_ROOT, 'gallery\img'))
+            #print (settings.STATIC_ROOT)
+            #----------------------------------------------------------------------
+            all_products = models.Producto.objects.values_list("foto")
+            print( all_products)
+            
+            #----------------------------------------------------------------------
+            all_p = models.Producto.objects.values_list("foto", "id")
+            
+            prod = []
+            for item in all_p:
+                print(item[0])
+                print(item[1])
+                
+                auxTime =  timezone.now() 
+               
+                #precio = models.PreciosProductoFecha.objects.filter(fecha_inicio__lte=auxTime, fecha_fin__gt=auxTime, Producto_id = item[1])
+                precio = models.PreciosProductoFecha.objects.all().filter(fecha_inicio__lte=auxTime, fecha_fin__gt=auxTime, Producto_id = item[1]).values_list('precio_sin_iva','id')    
+                impuesto = models.ImpuestosProductoFecha.objects.all().filter(fecha_inicio__lte=auxTime, fecha_fin__gt=auxTime, Producto_id = item[1]).values_list('porcentaje_impuesto','id')    
+                
+                #print(impuesto)
+                for elem in precio:
+                    prc = elem[0]
+                    for imp in impuesto:
+                        
+                        total_imp = (prc) * (imp[0]/100)
+                        prc =  prc + total_imp
+                    aux = (item[0], '{0:.4}'.format(prc))
+                    
+                    prod.append(aux)
+                    break
+                 
+                
+                
+            #all_ = models.PreciosProductoFecha.objects.all().prefetch_related('prod_set')
+     
+             
+            context ={
+                  #'all_products':all_products,
+                  'all_products':prod,
+            }
+            #context['images'] = os.listdir(os.path.join(settings.STATIC_ROOT, 'gallery\img'))
+           # print("Content ")
+           # print (all_products)
+            #print(context)
+        except Exception as e:
+            # Si no hay ninguna imagen retornar un arreglo vacio
+            print (e)
+            context['images'] = []
+        return context
+
+@login_required
+def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(**kwargs)
        # print('static root')
         #print (settings.STATIC_ROOT)
