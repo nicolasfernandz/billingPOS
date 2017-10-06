@@ -112,27 +112,4 @@
 
 </body>
 
-<script type="text/javascript">
-    $(function () {
-    	otable = $("#tablaClients").dataTable();
-    	 
-    	//Setting number of filtered rows into a div
-    	//show_cant_vehicles();
-    })
-    
-    function show_cant_clients() {
-		//Setting number of filtered rows in div		
-		otable = $("#tablaClients").dataTable();
-		document.getElementById('cant_clients').innerHTML = otable.fnSettings().fnRecordsDisplay();
-	}
-</script>
-
-<!-- Page-Level Demo Scripts - Tables - Use for reference -->
-<script>
-$(document).ready(function() {
-    $('#tablaClients').DataTable({
-        responsive: true
-        });
-});
-</script>
 {% endblock %}

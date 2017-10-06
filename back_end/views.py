@@ -22,7 +22,8 @@ def logout(request):
     return HttpResponseRedirect("/login/")
 
 def login(request):
-    return render(request, 'pages/login.html', {})
+    #return render(request, 'pages/login.html', {})
+    return HttpResponseRedirect("/login/")
 
 
 from django.shortcuts import redirect
