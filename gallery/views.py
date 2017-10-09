@@ -114,8 +114,8 @@ def get_context_data(request):
             
             prod = []
             for item in all_p:
-                print(item[0])
-                print(item[1])
+                #print(item[0])
+               # print(item[1])
                 
                 auxTime =  timezone.now() 
                
@@ -132,6 +132,7 @@ def get_context_data(request):
                         prc =  prc + total_imp
                     aux = (item[0], '{0:.4}'.format(prc))
                     
+                    
                     prod.append(aux)
                     break
                  
@@ -139,7 +140,7 @@ def get_context_data(request):
                 
             #all_ = models.PreciosProductoFecha.objects.all().prefetch_related('prod_set')
      
-             
+            #print('prod: ' + str(prod))
             context ={
                   #'all_products':all_products,
                   'all_products':prod,
@@ -163,10 +164,31 @@ def cargaVenta(request):
     
     print(content)
     
-    producto = models.Producto.objects.get(foto=json)
+    parametros = content.split(',')
+    
+    nom_producto = parametros[0].strip()
+    precio = parametros[1].strip()
+    num_caja = parametros[2].strip()
+    
+    print('producto: ' +  nom_producto)
+    print('caja: ' + num_caja)
+    print('precio: ' +precio)
+    #obtengo la caja de la tabla
+    caja = models.Caja.objects.get(id = num_caja)
+    
+    producto = models.Producto.objects.get(foto=nom_producto)
     print(producto.nombre)
-    venta = models.Venta.objects.create(precio = producto.precio, fecha = time.strftime("%H:%M:%S"),Observaciones = "", cantidad_unidades = 1, AperturaCaja_id = 1)
+    
+    time =  timezone.now() 
+    apertura_caja = models.AperturaCaja.objects.filter(fecha_apertura_Caja__lte=time, fecha_cierre_Caja__gt=time, Caja = caja)    
+    print( apertura_caja.first())
+    if apertura_caja.first() is not None:
+        print('jojojojojo')
+        venta = models.Venta.objects.create(total_sin_iva = producto.precio, fecha = time,Observaciones = "", cantidad_unidades = 1, Apertura=apertura_caja.first())
      
+    
+    
+    
     #Revisar 
     #models.Linea_Venta.objects.create(Producto = producto, Venta = venta)
     return render(request,'gallery/index.html', {})
@@ -187,12 +209,12 @@ def some_view(request):
 def aperturaCaja(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
-    #content = body["param"]
+    content = body["param"]
     
     caja = models.Caja.objects.get(id=1)
     print(caja.Descripcion)
     auxTime =  timezone.now() 
-    print(auxTime)
+    print(content)
     models.AperturaCaja.objects.create(fecha_apertura_Caja = auxTime,fecha_cierre_Caja='9999-12-31 00:00:00.000000+00:00', Caja= caja)
  #   apertura_dia = models.Dia.objects.filter(fecha_apertura__lte=content, fecha_cierre__gt=content)    
   #  print(apertura_dia.first())

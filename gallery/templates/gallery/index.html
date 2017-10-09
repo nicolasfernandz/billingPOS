@@ -121,17 +121,24 @@
 
 
 function guardarDatos(url, precio){
+	 
 	var caja = document.getElementById('apertura_caja').value;
+	
+	
 	if(caja == 'caja_abierta'){
-	var c = url;
-	var d = precio;
+	var param_url = url;
+	var param_precio = precio;
+	var param_caja = document.getElementById('num_caja').value;
+	
+	var param =param_url + "," +param_precio+","+param_caja;
+	//var param = c+","+d;
 	 var count;
      $.ajax({
          type: "POST",
          url: "/billingPOS/ventas/cargaVenta/",
          //url: "~/Vistas/SistemaDeGestion/Controladores/Controlador_Reserva/AuxBusquedaSocio", 
          data:JSON
-         .stringify({'param':c},{'a':d}), // passing the parameter 
+         .stringify({'param':param}), // passing the parameter 
          contentType: "application/json; charset=utf-8",
          dataType: "json",
          async: false,
@@ -211,7 +218,7 @@ function abrirCerrarCaja(){
 	         success: function (result) {
 	        	
 	        	 if(result == 'permitirAperturaCaja'){
-	        	 $('#login_modal').modal();
+	        	 //$('#login_modal').modal();
 	        	 document.getElementById('abrirCerrarCaja').className = 'btn btn-danger';
 		    	 document.getElementById('abrirCerrarCaja').value = 'Cerrar Caja'; 
 		    	 document.getElementById('apertura_caja').value = 'caja_abierta';
@@ -236,7 +243,7 @@ function abrirCerrarCaja(){
 	
 }
 </script>
- <input type="hidden" id="caja" value="1">
+ <input type="hidden" id="num_caja" name='num_caja' value="1">
 	<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
 		<!--  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-ejemplo" aria-controls="navbar-ejemplo" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -263,7 +270,7 @@ function abrirCerrarCaja(){
 					  {% with image='gallery/img/'|add:file.0 %} 
 						<div class="card" style="width: 10rem;"> 
 						
-							<a href="javascript:guardarDatos('{{file.0}}, {{file.1}}')">
+							<a href="javascript:guardarDatos('{{file.0}}','{{file.1}}')">
 							
 							 <img class="img-fluid" src="{% static image %}"/> 
 								<div class="card-body" align="center">
