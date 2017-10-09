@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'ventas/cargaVenta/', views.cargaVenta, name = 'cargaVenta'),
     url(r'^ventas/some/', views.some_view, name = 'pruebas'),
     url(r'ventas/aperturaCaja/', views.aperturaCaja, name = 'aperturaCaja'),
+     url(r'ventas/cierreCaja/', views.cierreCaja, name = 'cierreCaja'),
     
     url(r'^logout', views.logout),
 ]

@@ -169,10 +169,46 @@ function abrirCerrarCaja(){
 	
 	var clase = document.getElementById('abrirCerrarCaja').className;
 	if(clase == 'btn btn-danger'){
+		$.ajax({
+	         type: "POST",
+	         url: "/billingPOS/ventas/cierreCaja/",
+	         //url: "~/Vistas/SistemaDeGestion/Controladores/Controlador_Reserva/AuxBusquedaSocio", 
+	         data:JSON
+	         .stringify({'param':fec}), // passing the parameter 
+	         contentType: "application/json; charset=utf-8",
+	         dataType: "json",
+	         async: false,
+	         error: function (XMLHttpRequest, textStatus, errorThrown) {
+	             //alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+	             //alert(XMLHttpRequest.status);
+	             //alert(XMLHttpRequest.responseText);
+	           // alert(XMLHttpRequest.errorThrown);   
+	        	
+	         },
+	         success: function (result) {
+	        	
+	        	 if(result == 'permitirAperturaCaja'){
+	        	 //$('#login_modal').modal();
+	        	 document.getElementById('abrirCerrarCaja').className = 'btn btn-danger';
+		    	 document.getElementById('abrirCerrarCaja').value = 'Cerrar Caja'; 
+		    	 document.getElementById('apertura_caja').value = 'caja_abierta';
+	        	 }else{
+	        		
+	        		 $('#día_cerrado').modal();
+
+	        		 setTimeout(function() {$('#día_cerrado').modal('hide');}, 2000);
+	 	        	document.getElementById('abrirCerrarCaja').className = 'btn btn-success';
+	 	        	document.getElementById('abrirCerrarCaja').value = 'Abrir Caja'; 
+	 	        	document.getElementById('apertura_caja').value = 'caja_cerrada';
+	        		 
+	        		 
+	        	 }
+	         }
+	     });
 	document.getElementById('abrirCerrarCaja').className = 'btn btn-success';
 	document.getElementById('abrirCerrarCaja').value = 'Abrir Caja'; 
 	document.getElementById('apertura_caja').value = 'caja_cerrada';
-	}
+	}else{
 	
 	if(clase == 'btn btn-success'){
 		
@@ -240,7 +276,7 @@ function abrirCerrarCaja(){
 		
 		
 		}
-	
+	}
 }
 </script>
  <input type="hidden" id="num_caja" name='num_caja' value="1">

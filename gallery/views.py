@@ -47,7 +47,7 @@ class Index(TemplateView):
             #print (settings.STATIC_ROOT)
             #----------------------------------------------------------------------
             all_products = models.Producto.objects.values_list("foto")
-            print( all_products)
+            #print( all_products)
             
             #----------------------------------------------------------------------
             all_p = models.Producto.objects.values_list("foto", "id")
@@ -162,7 +162,7 @@ def cargaVenta(request):
    # aux = json.parse()
     content = body['param']
     
-    print(content)
+    #print(content)
     
     parametros = content.split(',')
     
@@ -170,39 +170,39 @@ def cargaVenta(request):
     precio = parametros[1].strip()
     num_caja = parametros[2].strip()
     
-    print('producto: ' +  nom_producto)
-    print('caja: ' + num_caja)
-    print('precio: ' +precio)
+    #print('producto: ' +  nom_producto)
+    #print('caja: ' + num_caja)
+    #print('precio: ' +precio)
     
     #obtengo la caja de la tabla
     caja = models.Caja.objects.get(id = num_caja)
     
     #obtengo el producto de la tabla
     producto = models.Producto.objects.get(foto=nom_producto)
-    print(producto.nombre)
+    #print(producto.nombre)
     
     time =  timezone.now()
     precio = models.PreciosProductoFecha.objects.filter(fecha_inicio__lte=time, fecha_fin__gt=time, Producto=producto)
-    print(precio.first().precio_sin_iva) 
+    #print(precio.first().precio_sin_iva) 
     impuesto = models.ImpuestosProductoFecha.objects.all().filter(fecha_inicio__lte=time, fecha_fin__gt=time, Producto=producto)                
     
-    precio = 0+precio.first().precio_sin_iva
-    print(precio)
+    precio_sin_iva = 0+precio.first().precio_sin_iva
+    #print(precio)
     montoIVA = 0
     if(impuesto.first() is not None):
-        montoIVA = precio*impuesto.first().porcentaje_impuesto/100
+        montoIVA = precio_sin_iva*impuesto.first().porcentaje_impuesto/100
     apertura_caja = models.AperturaCaja.objects.filter(fecha_apertura_Caja__lte=time, fecha_cierre_Caja__gt=time, Caja = caja)    
-    print( apertura_caja.first())
+    #print( apertura_caja.first())
     if apertura_caja.first() is not None:
-        print('entre a realizar una venta')
-        venta = models.Venta.objects.create(total_sin_iva =precio, fecha = time,monto_iva =montoIVA, AperturaCaja=apertura_caja.first(),total=montoIVA+precio )
-     
+        #print('entre a realizar una venta')
+        venta = models.Venta.objects.create(total_sin_iva =precio_sin_iva, fecha = time,monto_iva =montoIVA, AperturaCaja=apertura_caja.first(),total=montoIVA+precio_sin_iva )
+        #linea_venta = models.Linea_Venta.objects.create(PreciosProductoFecha=precio.first(), ImpuestosProductoFecha = impuesto.first(), Venta = venta)
     
     
     
     #Revisar 
     #models.Linea_Venta.objects.create(Producto = producto, Venta = venta)
-    return HttpResponse(json.dumps('permitirAperturaCaja'), content_type="application/json")
+    return HttpResponse(json.dumps('ventaExitosa'), content_type="application/json")
 
 
 def some_view(request):
@@ -223,9 +223,9 @@ def aperturaCaja(request):
     content = body["param"]
     
     caja = models.Caja.objects.get(id=1)
-    print(caja.Descripcion)
+    #print(caja.Descripcion)
     auxTime =  timezone.now() 
-    print(content)
+    #print(content)
     models.AperturaCaja.objects.create(fecha_apertura_Caja = auxTime,fecha_cierre_Caja='9999-12-31 00:00:00.000000+00:00', Caja= caja)
  #   apertura_dia = models.Dia.objects.filter(fecha_apertura__lte=content, fecha_cierre__gt=content)    
   #  print(apertura_dia.first())
@@ -235,3 +235,9 @@ def aperturaCaja(request):
     
     #return HttpResponse(json.dumps('denegarAperturaCaja'), content_type="application/json")
     
+def cierreCaja(request):
+    caja = AperturaCaja.objects.last()
+    time =  timezone.now() 
+    caja.fecha_cierre_Caja = time
+    caja.save()
+    return HttpResponse(json.dumps('permitirAperturaCaja'), content_type="application/json")
