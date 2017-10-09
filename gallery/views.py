@@ -173,25 +173,36 @@ def cargaVenta(request):
     print('producto: ' +  nom_producto)
     print('caja: ' + num_caja)
     print('precio: ' +precio)
+    
     #obtengo la caja de la tabla
     caja = models.Caja.objects.get(id = num_caja)
     
+    #obtengo el producto de la tabla
     producto = models.Producto.objects.get(foto=nom_producto)
     print(producto.nombre)
     
-    time =  timezone.now() 
+    time =  timezone.now()
+    precio = models.PreciosProductoFecha.objects.filter(fecha_inicio__lte=time, fecha_fin__gt=time, Producto=producto)
+    print(precio.first().precio_sin_iva) 
+    impuesto = models.ImpuestosProductoFecha.objects.all().filter(fecha_inicio__lte=time, fecha_fin__gt=time, Producto=producto)                
+    
+    precio = 0+precio.first().precio_sin_iva
+    print(precio)
+    montoIVA = 0
+    if(impuesto.first() is not None):
+        montoIVA = precio*impuesto.first().porcentaje_impuesto/100
     apertura_caja = models.AperturaCaja.objects.filter(fecha_apertura_Caja__lte=time, fecha_cierre_Caja__gt=time, Caja = caja)    
     print( apertura_caja.first())
     if apertura_caja.first() is not None:
-        print('jojojojojo')
-        venta = models.Venta.objects.create(total_sin_iva = producto.precio, fecha = time,Observaciones = "", cantidad_unidades = 1, Apertura=apertura_caja.first())
+        print('entre a realizar una venta')
+        venta = models.Venta.objects.create(total_sin_iva =precio, fecha = time,monto_iva =montoIVA, AperturaCaja=apertura_caja.first(),total=montoIVA+precio )
      
     
     
     
     #Revisar 
     #models.Linea_Venta.objects.create(Producto = producto, Venta = venta)
-    return render(request,'gallery/index.html', {})
+    return HttpResponse(json.dumps('permitirAperturaCaja'), content_type="application/json")
 
 
 def some_view(request):
