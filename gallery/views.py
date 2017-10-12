@@ -54,8 +54,8 @@ class Index(TemplateView):
             
             prod = []
             for item in all_p:
-                print(item[0])
-                print(item[1])
+               # print(item[0])
+                #print(item[1])
                 
                 auxTime =  timezone.now() 
                

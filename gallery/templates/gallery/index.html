@@ -121,7 +121,29 @@
 
 
 function guardarDatos(url, precio){
-	 
+	$.ajaxSetup({ 
+	     beforeSend: function(xhr, settings) {
+	         function getCookie(name) {
+	             var cookieValue = null;
+	             if (document.cookie && document.cookie != '') {
+	                 var cookies = document.cookie.split(';');
+	                 for (var i = 0; i < cookies.length; i++) {
+	                     var cookie = jQuery.trim(cookies[i]);
+	                     // Does this cookie string begin with the name we want?
+	                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+	                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	                         break;
+	                     }
+	                 }
+	             }
+	             return cookieValue;
+	         }
+	         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+	             // Only send the token to relative URLs i.e. locally.
+	             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+	         }
+	     } 
+	});
 	var caja = document.getElementById('apertura_caja').value;
 	
 	
@@ -166,7 +188,29 @@ function guardarDatos(url, precio){
      
 }
 function abrirCerrarCaja(){
-	
+	$.ajaxSetup({ 
+	     beforeSend: function(xhr, settings) {
+	         function getCookie(name) {
+	             var cookieValue = null;
+	             if (document.cookie && document.cookie != '') {
+	                 var cookies = document.cookie.split(';');
+	                 for (var i = 0; i < cookies.length; i++) {
+	                     var cookie = jQuery.trim(cookies[i]);
+	                     // Does this cookie string begin with the name we want?
+	                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+	                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	                         break;
+	                     }
+	                 }
+	             }
+	             return cookieValue;
+	         }
+	         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+	             // Only send the token to relative URLs i.e. locally.
+	             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+	         }
+	     } 
+	});
 	var clase = document.getElementById('abrirCerrarCaja').className;
 	if(clase == 'btn btn-danger'){
 		$.ajax({
@@ -279,7 +323,7 @@ function abrirCerrarCaja(){
 	}
 }
 </script>
- <input type="hidden" id="num_caja" name='num_caja' value="1">
+ <input type="hidden" id="num_caja" name='num_caja' value='1'>
 	<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
 		<!--  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-ejemplo" aria-controls="navbar-ejemplo" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -288,7 +332,7 @@ function abrirCerrarCaja(){
 
 		<div class="collapse navbar-collapse" id="navbar-ejemplo">
 			<span class="navbar-text">
-				Caja 1
+				Caja {{caja}}
 			</span>
 			
 		</div>
