@@ -224,7 +224,7 @@ def aperturaCaja(request):
     body = json.loads(body_unicode)
     content = body["param"]
     
-    caja = models.Caja.objects.get(id=1)
+    caja = models.Caja.objects.get(id=content)
     #print(caja.Descripcion)
     auxTime =  timezone.now() 
     #print(content)
@@ -236,11 +236,26 @@ def aperturaCaja(request):
     return HttpResponse(json.dumps('permitirAperturaCaja'), content_type="application/json")
     
     #return HttpResponse(json.dumps('denegarAperturaCaja'), content_type="application/json")
-
+def checkCaja(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    content = body["param"]
+    
+    caja = AperturaCaja.objects.filter(Caja_id = content).last()
+    time =  timezone.now() 
+    
+    if(caja.fecha_cierre_Caja > time):
+        return HttpResponse(json.dumps('existeCajaAbierta'), content_type="application/json")
+    else:
+        return HttpResponse(json.dumps('cajaCerrada'), content_type="application/json")
     
 from gallery import execQuery   
 def cierreCaja(request):
-    caja = AperturaCaja.objects.last()
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    content = body["param"]
+    
+    caja = AperturaCaja.objects.filter(Caja_id = content).last()
     time =  timezone.now() 
     caja.fecha_cierre_Caja = time
     caja.save()

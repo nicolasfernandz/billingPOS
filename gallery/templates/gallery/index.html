@@ -118,7 +118,71 @@
 {% csrf_token %}
 <input id='apertura_caja' type="hidden" name="apertura_caja" value="caja_cerrada">
 <script type="text/javascript">
-
+function checkCaja(){
+	//alert('Entre');
+	$.ajaxSetup({ 
+	     beforeSend: function(xhr, settings) {
+	         function getCookie(name) {
+	             var cookieValue = null;
+	             if (document.cookie && document.cookie != '') {
+	                 var cookies = document.cookie.split(';');
+	                 for (var i = 0; i < cookies.length; i++) {
+	                     var cookie = jQuery.trim(cookies[i]);
+	                     // Does this cookie string begin with the name we want?
+	                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+	                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	                         break;
+	                     }
+	                 }
+	             }
+	             return cookieValue;
+	         }
+	         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+	             // Only send the token to relative URLs i.e. locally.
+	             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+	         }
+	     } 
+	});
+	
+	var caja = document.getElementById('num_caja').value;
+	$.ajax({
+        type: "POST",
+        url: "/billingPOS/ventas/checkCaja/",
+        //url: "~/Vistas/SistemaDeGestion/Controladores/Controlador_Reserva/AuxBusquedaSocio", 
+        data:JSON
+        .stringify({'param':caja}), // passing the parameter 
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+            //alert(XMLHttpRequest.status);
+            //alert(XMLHttpRequest.responseText);
+          // alert(XMLHttpRequest.errorThrown);   
+       	 alert("ERRRROORRR")
+        },
+        success: function (result) {
+       	
+        if(result == 'cajaCerrada'){
+        	document.getElementById('abrirCerrarCaja').className = 'btn btn-success';
+    		document.getElementById('abrirCerrarCaja').value = 'Abrir Caja'; 
+    		document.getElementById('apertura_caja').value = 'caja_cerrada';
+    		document.getElementById('abrirCerrarCaja').type = 'button';
+        }else{
+        	if(result == 'existeCajaAbierta'){
+        		document.getElementById('abrirCerrarCaja').className = 'btn btn-danger';
+		    	document.getElementById('abrirCerrarCaja').value = 'Cerrar Caja'; 
+		    	document.getElementById('apertura_caja').value = 'caja_abierta';
+		    	document.getElementById('abrirCerrarCaja').type = 'button';
+        		
+        	}
+        }
+       	 count = result;
+       	 //alert(count)
+        }
+    });
+	
+}
 
 function guardarDatos(url, precio){
 	$.ajaxSetup({ 
@@ -211,14 +275,16 @@ function abrirCerrarCaja(){
 	         }
 	     } 
 	});
-	var clase = document.getElementById('abrirCerrarCaja').className;
-	if(clase == 'btn btn-danger'){
+	var clase = document.getElementById('abrirCerrarCaja').value;
+	var caja = document.getElementById('num_caja').value;
+	if(clase == 'Cerrar Caja'){
+		
 		$.ajax({
 	         type: "POST",
 	         url: "/billingPOS/ventas/cierreCaja/",
 	         //url: "~/Vistas/SistemaDeGestion/Controladores/Controlador_Reserva/AuxBusquedaSocio", 
 	         data:JSON
-	         .stringify({'param':fec}), // passing the parameter 
+	         .stringify({'param':caja}), // passing the parameter 
 	         contentType: "application/json; charset=utf-8",
 	         dataType: "json",
 	         async: false,
@@ -254,37 +320,15 @@ function abrirCerrarCaja(){
 	document.getElementById('apertura_caja').value = 'caja_cerrada';
 	}else{
 	
-	if(clase == 'btn btn-success'){
+	if(clase == 'Abrir Caja'){
 		
-		 var today = new Date();
-		 var dd = today.getDate();
-		 var mm = today.getMonth()+1; //January is 0!
-		 var yyyy = today.getFullYear();
-		 var hh = today.getHours();
-         var min = today.getMinutes();
-         var ss = today.getSeconds();
-		 if(dd<10) {
-			    dd = '0'+dd
-			} 
-		 if(mm<10) {
-			    mm = '0'+mm
-			}
-		 if(min<10) {
-			    min = '0'+min
-			}
-		 if(hh<10) {
-			    hh = '0'+hh
-			}
-		 if(ss<10) {
-			    ss = '0'+ss
-			}
-		 var fec = yyyy+"-"+mm+"-"+dd+" "+hh+":"+min+":"+ss;
+		 
 		 $.ajax({
 	         type: "POST",
 	         url: "/billingPOS/ventas/aperturaCaja/",
 	         //url: "~/Vistas/SistemaDeGestion/Controladores/Controlador_Reserva/AuxBusquedaSocio", 
 	         data:JSON
-	         .stringify({'param':fec}), // passing the parameter 
+	         .stringify({'param':caja}), // passing the parameter 
 	         contentType: "application/json; charset=utf-8",
 	         dataType: "json",
 	         async: false,
@@ -322,7 +366,9 @@ function abrirCerrarCaja(){
 		}
 	}
 }
+
 </script>
+<body onload="checkCaja()">
  <input type="hidden" id="num_caja" name='num_caja' value='1'>
 	<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
 		<!--  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-ejemplo" aria-controls="navbar-ejemplo" aria-expanded="false" aria-label="Toggle navigation">
@@ -338,7 +384,7 @@ function abrirCerrarCaja(){
 		</div>
 		<a class="navbar-brand" href="/logout">Log Out</a>
 		 
-		<input id="abrirCerrarCaja" type="button" class="btn btn-success" value="Abrir Caja" onclick="abrirCerrarCaja();" />
+		<input id="abrirCerrarCaja" type="hidden" class="btn btn-success" value="Abrir Caja" onclick="abrirCerrarCaja();" />
 	</nav>
 
 	<div class="container-fluid"> <!-- Nicolas: aca estaba la clase container y ademas agregamos los divs col-sm-10 y col-sm-2 -->
