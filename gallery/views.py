@@ -196,7 +196,9 @@ def cargaVenta(request):
     if apertura_caja.first() is not None:
         #print('entre a realizar una venta')
         venta = models.Venta.objects.create(total_sin_iva =precio_sin_iva, fecha = time,monto_iva =montoIVA, AperturaCaja=apertura_caja.first(),total=montoIVA+precio_sin_iva )
-        #linea_venta = models.Linea_Venta.objects.create(PreciosProductoFecha=precio.first(), ImpuestosProductoFecha = impuesto.first(), Venta = venta)
+        prec_prod = precio.first()
+        imp_prod = impuesto.first()
+        linea_venta = models.Linea_Venta.objects.create(PreciosProductoFecha=prec_prod, ImpuestosProductoFecha =imp_prod , Venta = venta)
     
     
     
@@ -234,9 +236,9 @@ def aperturaCaja(request):
     return HttpResponse(json.dumps('permitirAperturaCaja'), content_type="application/json")
     
     #return HttpResponse(json.dumps('denegarAperturaCaja'), content_type="application/json")
+
     
-from gallery import execQuery
-    
+from gallery import execQuery   
 def cierreCaja(request):
     caja = AperturaCaja.objects.last()
     time =  timezone.now() 
