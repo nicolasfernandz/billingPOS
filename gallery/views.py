@@ -253,9 +253,9 @@ from gallery import execQuery
 def cierreCaja(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
-    content = body["param"]
+    idCaja = body["param"]
     
-    caja = AperturaCaja.objects.filter(Caja_id = content).last()
+    caja = AperturaCaja.objects.filter(Caja_id = idCaja).last()
     time =  timezone.now() 
     caja.fecha_cierre_Caja = time
     caja.save()
