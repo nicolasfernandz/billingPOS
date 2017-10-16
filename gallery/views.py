@@ -95,7 +95,7 @@ class Index(TemplateView):
         return context
 
 @login_required
-def get_context_data(request):
+def get_context_data(request,caja_id ):
        # context = super(Index, self).get_context_data(**kwargs)
        # print('static root')
         #print (settings.STATIC_ROOT)
@@ -144,6 +144,7 @@ def get_context_data(request):
             context ={
                   #'all_products':all_products,
                   'all_products':prod,
+                  'caja_id':caja_id,
             }
             #context['images'] = os.listdir(os.path.join(settings.STATIC_ROOT, 'gallery\img'))
            # print("Content ")

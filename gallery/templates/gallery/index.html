@@ -369,7 +369,7 @@ function abrirCerrarCaja(){
 
 </script>
 <body onload="checkCaja()">
- <input type="hidden" id="num_caja" name='num_caja' value='1'>
+ <input type="hidden" id="num_caja" name='num_caja' value='{{caja_id}}'>
 	<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
 		<!--  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-ejemplo" aria-controls="navbar-ejemplo" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -378,7 +378,7 @@ function abrirCerrarCaja(){
 
 		<div class="collapse navbar-collapse" id="navbar-ejemplo">
 			<span class="navbar-text">
-				Caja {{caja}}
+				Caja {{caja_id}}
 			</span>
 			
 		</div>

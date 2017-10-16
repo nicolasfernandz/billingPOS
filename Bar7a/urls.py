@@ -26,6 +26,9 @@ urlpatterns = [
     url(r'^back_end/', include('back_end.urls')),
     url(r'^billingPOS/', include('gallery.urls')),
     
+    
+    url(r'^billingPOS/([0-9]{1})', include('gallery.urls')),
+    
     #Para poder redirigir dependiendo del Rol del User
     url(r'login_success/$', views.login_success, name='login_success'),
 ]

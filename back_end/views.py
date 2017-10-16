@@ -34,7 +34,15 @@ def login_success(request):
     if request.user.groups.filter(name="barman").exists():
         print (request.user.username)
         # user is an admin
-        return redirect("/billingPOS")
+        caja = request.user.username
+        if (caja == 'caja1'):
+            return redirect("/billingPOS/1")
+        else:
+            if (caja == 'caja2'):
+                return redirect("/billingPOS/2")
+            else:
+                if (caja == 'caja3'):
+                    return redirect("/billingPOS/3")
     else:
         #all_ventas = Linea_Venta.objects.all().order_by('-id')
         context = {
