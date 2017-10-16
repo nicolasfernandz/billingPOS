@@ -70,3 +70,10 @@ class Linea_Venta(models.Model):
     
     def __str__(self):
         return self.Venta, self.PreciosProductoFecha
+
+class Cierres(models.Model):
+    AperturaCaja = models.ForeignKey(AperturaCaja, on_delete = models.CASCADE)  #Con AperturaCaja llego a todas las ventas y productos vendidos.
+    fechaCierre = models.DateTimeField(auto_now_add=True, blank=True)
+    total_sin_iva = models.DecimalField(max_digits=15, decimal_places=2)
+    monto_iva = models.DecimalField(max_digits=15, decimal_places=2)
+    total = models.DecimalField(max_digits=15, decimal_places=2)

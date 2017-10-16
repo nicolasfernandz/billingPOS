@@ -235,9 +235,19 @@ def aperturaCaja(request):
     
     #return HttpResponse(json.dumps('denegarAperturaCaja'), content_type="application/json")
     
+from gallery import execQuery
+    
 def cierreCaja(request):
     caja = AperturaCaja.objects.last()
     time =  timezone.now() 
     caja.fecha_cierre_Caja = time
     caja.save()
+    
+    rows=execQuery.getTotalsToCloseBox(1)  #caja.id): Aca va el id de Apertura Caja
+    
+    #for rows in execQuery.getTotalsToCloseBox(1):
+    #    print (rows)
+        
+    models.Cierres.objects.create(fechaCierre= time, total_sin_iva=rows[0][0], monto_iva=rows[0][1], total=rows[0][2], AperturaCaja= caja)
+    
     return HttpResponse(json.dumps('permitirAperturaCaja'), content_type="application/json")
