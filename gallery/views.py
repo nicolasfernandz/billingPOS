@@ -261,7 +261,7 @@ def cierreCaja(request):
     caja.fecha_cierre_Caja = time
     caja.save()
     
-    rows=execQuery.getTotalsToCloseBox(1)  #caja.id): Aca va el id de Apertura Caja
+    rows=execQuery.getTotalsToCloseBox(caja.id)  #caja.id): Aca va el id de Apertura Caja
     
     #for rows in execQuery.getTotalsToCloseBox(1):
     #    print (rows)
