@@ -6,7 +6,7 @@ Created on 21 set. 2017
 3. python manage.py shell (Para despues poder asignar roles a usuarios)
 4. from rolepermissions.roles import assign_role
 5. Crear usuarios en django admin
-6. user = User.objects.get(username='[NombreDeUsuarioEnAdmin]')
+6. user = User.objects.get(username='[NombreDeUsuarioEnAdmin]')  --> no me anduvo, corri esto antes y ahi si: from django.contrib.auth.models import User
 7. assign_role(user, '[role]') el rol con minuscula
 -> https://www.youtube.com/watch?v=f6Doj2LOIlo
 @author: Juan
