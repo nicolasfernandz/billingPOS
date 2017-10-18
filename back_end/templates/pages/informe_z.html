@@ -55,7 +55,7 @@
 									</div>	
                                 </div>
 								<div id= 'estadoclients' class="col-xs-7"> 
-									<h1>Informe X</h1> 
+									<h1>Informes Z</h1> 
 									
 								</div>
                                 <div class="col-xs-3 text-right">
@@ -71,21 +71,24 @@
 						 <!-- Table -->
 							<table class="table table-hover" id="tablaClients">
 								<thead>
-							<td><strong>Producto</strong></td>
-									<td><strong>Precio</strong></td>
-									<td><strong>Fecha</strong></td>
-									<td><strong>Unidades</strong></td>
-									<td><strong>id_factura</strong></td>
+									<td><strong>Nº de Apertura</strong></td>
+									<td><strong>Nº de Infomre</strong></td>
+									<td><strong>Fecha de Apertura</strong></td>
+									<td><strong>Fecha de Cierre</strong></td>
+									<td><strong>Sub Total</strong></td>
+									<td><strong>IVA</strong></td>
+									<td><strong>Total</strong></td>
 								</thead>
 								<tbody>
-							{% for venta in all_ventas %}
+							{% for cierre in all_cierres %}
 									<tr>
-										<td><strong><a href=""> {{ venta.Producto.nombre }} </a> </strong></td>
-										<td><strong><a href=""> {{ venta.Venta.precio }} </a> </strong></td>
-										<td><strong><a href=""> {{ venta.Venta.fecha|date:"d-m-Y H:i:s" }} </a> </strong></td>
-										<td><strong><a href=""> {{ venta.Venta.cantidad_unidades}} </a></strong></td>
-										<td><strong><a href=""> {{ venta.id}} </a></strong></td>
-										
+										<td><strong><a href=""> {{ cierre.AperturaCaja.id}} </a></strong></td>
+										<td><strong><a href=""> {{ cierre.id}} </a></strong></td>
+										<td><strong><a href=""> {{ cierre.AperturaCaja.fecha_apertura_Caja|date:"d-m-Y H:i:s" }} </a></strong></td>
+										<td><strong><a href=""> {{ cierre.fechaCierre|date:"d-m-Y H:i:s" }} </a> </strong></td>
+										<td><strong><a href=""> {{ cierre.total_sin_iva}} </a></strong></td>
+										<td><strong><a href=""> {{ cierre.monto_iva }} </a> </strong></td>
+										<td><strong><a href=""> {{ cierre.total }} </a> </strong></td>
 									</tr>
 									{% endfor %}
 								</tbody>

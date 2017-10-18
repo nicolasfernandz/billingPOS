@@ -69,13 +69,27 @@ def listarVentas(request):
     } 
     return render(request, 'pages/ventas.html', context)
 
+from django.core.exceptions import MultipleObjectsReturned
 
 @login_required 
 @has_role_decorator('encargado')
 def informe_x(request):
-    all_ventas = Linea_Venta.objects.all().order_by('-id')
+    all_cajas = Caja.objects.all().order_by('-id')
+    for caja in all_cajas:
+        try:
+            aperturaCajaAbierta = AperturaCaja.objects.filter(Caja=caja, fecha_cierre_Caja__isnull=True)
+        except MultipleObjectsReturned:
+            print("Error, se obtuvieron mas de 1 caja abierta.")
+        else:
+            if aperturaCajaAbierta is not NULL and aperturaCajaAbierta.count() > 0:
+                caja.estado = 'ABIERTA' 
+                print("Caja " + str(caja.id) + " abierta.")
+            else:
+                caja.estado = 'CERRADA' 
+                print("Caja " + str(caja.id) + " abierta.")
+                        
     context = {
-        'all_ventas': all_ventas,
+        'all_cajas': all_cajas,
     } 
     return render(request, 'pages/informe_x.html', context)
 
@@ -83,9 +97,10 @@ def informe_x(request):
 @login_required 
 @has_role_decorator('encargado')
 def informe_z(request):
-    all_ventas = Linea_Venta.objects.all().order_by('-id')
+    #  all_cierres = Linea_Venta.objects.all().order_by('-id')
+    all_cierres = Cierres.objects.all().order_by('-id')
     context = {
-        'all_ventas': all_ventas,
+        'all_cierres': all_cierres,
     } 
     return render(request, 'pages/informe_z.html', context)
 

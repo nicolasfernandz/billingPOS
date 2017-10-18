@@ -229,7 +229,8 @@ def aperturaCaja(request):
     #print(caja.Descripcion)
     auxTime =  timezone.now() 
     #print(content)
-    models.AperturaCaja.objects.create(fecha_apertura_Caja = auxTime,fecha_cierre_Caja='9999-12-31 00:00:00.000000+00:00', Caja= caja)
+    #models.AperturaCaja.objects.create(fecha_apertura_Caja = auxTime,fecha_cierre_Caja='9999-12-31 00:00:00.000000+00:00', Caja= caja)
+    models.AperturaCaja.objects.create(fecha_apertura_Caja = auxTime, Caja= caja)
  #   apertura_dia = models.Dia.objects.filter(fecha_apertura__lte=content, fecha_cierre__gt=content)    
   #  print(apertura_dia.first())
    # if apertura_dia.first() is not None:

@@ -8,6 +8,7 @@ class Dia(models.Model):
     def __str__(self):
         return self.fecha_apertura.strftime("%d-%m-%Y %H:%M:%S")
 '''
+from _overlapped import NULL
    
 class Caja(models.Model):
     Descripcion = models.CharField(max_length =250)
@@ -20,8 +21,10 @@ class Caja(models.Model):
 class AperturaCaja(models.Model):
     Caja = models.ForeignKey(Caja, on_delete = models.CASCADE)
     fecha_apertura_Caja = models.DateTimeField(auto_now_add=True, blank=True)
-    fecha_cierre_Caja = models.DateTimeField(auto_now_add=False, blank=True)
+    fecha_cierre_Caja = models.DateTimeField(auto_now_add=False, null=True, blank=True)
 #    Dia = models.ForeignKey(Dia, on_delete = models.CASCADE)
+    def estado(self):
+        return self.fecha_cierre_Caja is NULL
 
 class Producto(models.Model):
     nombre = models.CharField(max_length =250)

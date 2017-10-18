@@ -71,23 +71,34 @@
 						 <!-- Table -->
 							<table class="table table-hover" id="tablaClients">
 								<thead>
-							<td><strong>Producto</strong></td>
-									<td><strong>Precio</strong></td>
-									<td><strong>Fecha</strong></td>
-									<td><strong>Unidades</strong></td>
-									<td><strong>id_factura</strong></td>
+									<td><strong>Nº de Caja</strong></td>
+									<td><strong>Descripción</strong></td>
+									<td><strong>Ubicación</strong></td>
+									<td><strong>Modelo</strong></td>
+									<td><strong>Nº de Serie</strong></td>
+									<td><strong>Estado</strong></td>
 								</thead>
 								<tbody>
-							{% for venta in all_ventas %}
+							{% for caja in all_cajas %}
 									<tr>
-										<td><strong><a href=""> {{ venta.Producto.nombre }} </a> </strong></td>
-										<td><strong><a href=""> {{ venta.Venta.precio }} </a> </strong></td>
-										<td><strong><a href=""> {{ venta.Venta.fecha|date:"d-m-Y H:i:s" }} </a> </strong></td>
-										<td><strong><a href=""> {{ venta.Venta.cantidad_unidades}} </a></strong></td>
-										<td><strong><a href=""> {{ venta.id}} </a></strong></td>
+										<td><strong><a href=""> {{ caja.id }} </a> </strong></td>
+										<td><strong><a href=""> {{ caja.Descripcion }} </a> </strong></td>
+										<td><strong><a href=""> {{ caja.ubicacion }} </a> </strong></td>
+										<td><strong><a href=""> {{ caja.modelo}} </a></strong></td>
+										<td><strong><a href=""> {{ caja.numero_serie}} </a></strong></td>
+										<td><strong><a href=""> {{ caja.estado}} </a></strong></td>
+										{% if caja.estado == 'ABIERTA' %}
+											<td>
+											<input id="generarInformeX" type="button" class="btn btn-success" value="Generar Inf. X" />
+											</td>
+										{% else %}
+											<td>
+											<input id="generarInformeXblockeado" type="button" class="btn btn-success" value="Generar Inf. X" disabled/>
+											</td>
+										{% endif %}
 										
 									</tr>
-									{% endfor %}
+							{% endfor %}
 								</tbody>
 						  </table>
 						</div>
