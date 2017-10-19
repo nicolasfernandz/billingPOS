@@ -69,7 +69,7 @@
                         </div>
 						<div class="panel-body">
 						 <!-- Table -->
-							<table class="table table-hover" id="tablaClients">
+							<table class="table table-hover" id="tablaInforme">
 								<thead>
 									<td><strong>Nº de Apertura</strong></td>
 									<td><strong>Nº de Infomre</strong></td>
@@ -78,6 +78,7 @@
 									<td><strong>Sub Total</strong></td>
 									<td><strong>IVA</strong></td>
 									<td><strong>Total</strong></td>
+									<td><strong>Acción</strong></td>
 								</thead>
 								<tbody>
 							{% for cierre in all_cierres %}
@@ -89,6 +90,9 @@
 										<td><strong><a href=""> {{ cierre.total_sin_iva}} </a></strong></td>
 										<td><strong><a href=""> {{ cierre.monto_iva }} </a> </strong></td>
 										<td><strong><a href=""> {{ cierre.total }} </a> </strong></td>
+										<td>
+										<input id="verInformeZ" type="button" class="btn btn-default btn-xs" value="Ver Informe z" />
+										</td>
 									</tr>
 									{% endfor %}
 								</tbody>
@@ -116,16 +120,16 @@
 </body>
 
 <script type="text/javascript">
-    $(function () {
-    	otable = $("#tablaClients").dataTable();
-    	 
-    	//Setting number of filtered rows into a div
-    	//show_cant_vehicles();
-    })
-    
+	$(function () {
+		//otable = $("#tablaInforme").dataTable();	Comente porque levantava una ventana tipo print error
+		 
+		//Setting number of filtered rows into a div
+		//show_cant_vehicles();
+	})
+   
     function show_cant_clients() {
-		//Setting number of filtered rows in div		
-		otable = $("#tablaClients").dataTable();
+		//Setting number of filtered rows in div	
+		otable = $("#tablaInforme").dataTable();
 		document.getElementById('cant_clients').innerHTML = otable.fnSettings().fnRecordsDisplay();
 	}
 </script>
@@ -133,7 +137,7 @@
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
 $(document).ready(function() {
-    $('#tablaClients').DataTable({
+    $('#tablaInforme').DataTable({
         responsive: true
         });
 });

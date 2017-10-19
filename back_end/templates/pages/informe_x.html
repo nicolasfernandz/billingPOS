@@ -77,6 +77,7 @@
 									<td><strong>Modelo</strong></td>
 									<td><strong>Nº de Serie</strong></td>
 									<td><strong>Estado</strong></td>
+									<td><strong>Acción</strong></td>
 								</thead>
 								<tbody>
 							{% for caja in all_cajas %}
@@ -89,11 +90,11 @@
 										<td><strong><a href=""> {{ caja.estado}} </a></strong></td>
 										{% if caja.estado == 'ABIERTA' %}
 											<td>
-											<input id="generarInformeX" type="button" class="btn btn-success" value="Generar Inf. X" />
+											<input id="generarInformeX" type="button" class="btn btn-default" value="Generar Inf. X" />
 											</td>
 										{% else %}
 											<td>
-											<input id="generarInformeXblockeado" type="button" class="btn btn-success" value="Generar Inf. X" disabled/>
+											<input id="generarInformeXblockeado" type="button" class="btn btn-default btn-sm" value="Generar Inf. X" disabled/>
 											</td>
 										{% endif %}
 										
@@ -125,7 +126,7 @@
 
 <script type="text/javascript">
     $(function () {
-    	otable = $("#tablaClients").dataTable();
+    	//otable = $("#tablaClients").dataTable();	Comente porque levantava una ventana tipo print error
     	 
     	//Setting number of filtered rows into a div
     	//show_cant_vehicles();

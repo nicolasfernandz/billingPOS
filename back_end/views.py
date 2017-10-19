@@ -74,7 +74,7 @@ from django.core.exceptions import MultipleObjectsReturned
 @login_required 
 @has_role_decorator('encargado')
 def informe_x(request):
-    all_cajas = Caja.objects.all().order_by('-id')
+    all_cajas = Caja.objects.all().order_by('id')
     for caja in all_cajas:
         try:
             aperturaCajaAbierta = AperturaCaja.objects.filter(Caja=caja, fecha_cierre_Caja__isnull=True)
