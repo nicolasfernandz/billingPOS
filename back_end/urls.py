@@ -16,6 +16,9 @@ urlpatterns = [
 
     url(r'^logout', views.logout),
     
+        #Client/[clientID] 
+    url(r'^(?P<venta_id>[0-9]+)$', views.verVenta, name = 'Ver Venta'),
+    
 #    url(r'^login', views.login),
 
     

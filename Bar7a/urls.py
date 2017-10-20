@@ -31,4 +31,6 @@ urlpatterns = [
     
     #Para poder redirigir dependiendo del Rol del User
     url(r'login_success/$', views.login_success, name='login_success'),
+    
+    url(r'^back_end/verVenta/', include('back_end.urls')),
 ]

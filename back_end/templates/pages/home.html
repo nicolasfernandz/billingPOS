@@ -55,7 +55,7 @@
 									</div>	
                                 </div>
 								<div id= 'estadoclients' class="col-xs-7"> 
-									<h1>---->  HOME  <----</h1> 
+									<h1>Todas las Ventas</h1> 
 									
 								</div>
                                 <div class="col-xs-3 text-right">
@@ -69,25 +69,22 @@
                         </div>
 						<div class="panel-body">
 						 <!-- Table -->
-							<table class="table table-hover" id="tablaClients">
+							<table class="table table-hover" id="tablaLineaVentas">
 								<thead>
-							<td><strong>Producto</strong></td>
-									<td><strong>Precio</strong></td>
+									<td><strong>Nº de Factura</strong></td>
 									<td><strong>Fecha</strong></td>
-									<td><strong>Unidades</strong></td>
-									<td><strong>id_factura</strong></td>
+									<td><strong>Producto</strong></td>
+									<td><strong>Total</strong></td>
 								</thead>
 								<tbody>
-							{% for venta in all_ventas %}
+								{% for lineaVenta in all_lineaVentas %}
 									<tr>
-										<td><strong><a href=""> {{ venta.Producto.nombre }} </a> </strong></td>
-										<td><strong><a href=""> {{ venta.Venta.precio }} </a> </strong></td>
-										<td><strong><a href=""> {{ venta.Venta.fecha|date:"d-m-Y H:i:s" }} </a> </strong></td>
-										<td><strong><a href=""> {{ venta.Venta.cantidad_unidades}} </a></strong></td>
-										<td><strong><a href=""> {{ venta.id}} </a></strong></td>
-										
+										<td><strong><a href="/back_end/verVenta/{{lineaVenta.Venta.id}}"> {{ lineaVenta.Venta.id }} </a> </strong></td>
+										<td><strong><a href="/back_end/verVenta/{{lineaVenta.Venta.id}}"> {{ lineaVenta.Venta.fecha|date:"d-m-Y H:i:s" }} </a> </strong></td>
+										<td><strong><a href="/back_end/verVenta/{{lineaVenta.Venta.id}}"> {{ lineaVenta.PreciosProductoFecha.Producto.nombre }} </a> </strong></td>
+										<td><strong><a href="/back_end/verVenta/{{lineaVenta.Venta.id}}"> {{ lineaVenta.Venta.total }} </a> </strong></td>										
 									</tr>
-									{% endfor %}
+								{% endfor %}
 								</tbody>
 						  </table>
 						</div>
@@ -111,5 +108,28 @@
 {% block encabezado %}
 
 </body>
+<script type="text/javascript">
+	$(function () {
+		//otable = $("#tablaLineaVentas").dataTable();	Comente porque levantava una ventana tipo print error
+		 
+		//Setting number of filtered rows into a div
+		//show_cant_vehicles();
+	})
+   
+    function show_cant_clients() {
+		//Setting number of filtered rows in div	
+		otable = $("#tablaLineaVentas").dataTable();
+		document.getElementById('cant_clients').innerHTML = otable.fnSettings().fnRecordsDisplay();
+	}
+</script>
 
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+$(document).ready(function() {
+    $('#tablaLineaVentas').DataTable({
+        responsive: true,
+        order:[[1,"desc"]]
+        });
+});
+</script>
 {% endblock %}

@@ -53,9 +53,9 @@ def login_success(request):
 
 @login_required    
 def home(request):
-    all_ventas = Linea_Venta.objects.all().order_by('-id')
+    all_lineaVentas = Linea_Venta.objects.all().order_by('-id')
     context = {
-        'all_ventas': all_ventas,
+        'all_lineaVentas': all_lineaVentas,
     } 
     return render(request, 'pages/home.html', context)
 
@@ -113,6 +113,16 @@ def reporte_ventas_producto(request):
  #       'all_ventas': all_ventas,
     } 
     return render(request, 'pages/reporte_ventas_producto.html', context)
+
+@login_required  
+@has_role_decorator('contador')
+def verVenta (request, venta_id):
+    verVenta = Venta.objects.get(id=venta_id)
+    context = {
+        'verVenta': verVenta,
+    } 
+    return render(request, 'pages/verVenta.html', context)
+
 
 '''
 def newOpeningDay (request):
