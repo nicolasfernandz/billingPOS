@@ -192,7 +192,7 @@ def cargaVenta(request):
     montoIVA = 0
     if(impuesto.first() is not None):
         montoIVA = precio_sin_iva*impuesto.first().porcentaje_impuesto/100
-    apertura_caja = models.AperturaCaja.objects.filter(fecha_apertura_Caja__lte=time, fecha_cierre_Caja__gt=time, Caja = caja)    
+    apertura_caja = models.AperturaCaja.objects.filter(fecha_apertura_Caja__lte=time, fecha_cierre_Caja__isnull=True, Caja = caja)    
     #print( apertura_caja.first())
     if apertura_caja.first() is not None:
         #print('entre a realizar una venta')
@@ -246,7 +246,8 @@ def checkCaja(request):
     caja = AperturaCaja.objects.filter(Caja_id = content).last()
     time =  timezone.now() 
     
-    if(caja.fecha_cierre_Caja > time):
+    
+    if(caja.fecha_cierre_Caja is None):
         return HttpResponse(json.dumps('existeCajaAbierta'), content_type="application/json")
     else:
         return HttpResponse(json.dumps('cajaCerrada'), content_type="application/json")
