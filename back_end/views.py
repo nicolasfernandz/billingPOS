@@ -118,7 +118,9 @@ def reporte_ventas_producto(request):
 @has_role_decorator('contador')
 def verVenta (request, venta_id):
     verVenta = Venta.objects.get(id=venta_id)
+    lineasVenta = Linea_Venta.objects.filter(Venta=verVenta)
     context = {
+        'verLineasVenta': lineasVenta,
         'verVenta': verVenta,
     } 
     return render(request, 'pages/verVenta.html', context)
