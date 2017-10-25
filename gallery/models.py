@@ -80,3 +80,7 @@ class Cierres(models.Model):
     total_sin_iva = models.DecimalField(max_digits=15, decimal_places=2)
     monto_iva = models.DecimalField(max_digits=15, decimal_places=2)
     total = models.DecimalField(max_digits=15, decimal_places=2)
+    
+class Metodo_de_Pago(models.Model):
+    nombre_metodo_pago = models.CharField(max_length =250)
+    porcentaje_retencion = models.DecimalField(max_digits=15, decimal_places=2)
