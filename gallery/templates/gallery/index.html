@@ -382,14 +382,15 @@ function abrirCerrarCaja(){
 			</span>
 			
 		</div>
-		<a class="navbar-brand" href="/logout">Log Out</a>
+		<a class="navbar-brand" href="/logout">Salir</a>
 		 
 		<input id="abrirCerrarCaja" type="button" class="btn btn-success" value="Abrir Caja" onclick="abrirCerrarCaja();" />
 	</nav>
 
-	<div class="container-fluid"> <!-- Nicolas: aca estaba la clase container y ademas agregamos los divs col-sm-10 y col-sm-2 -->
+	<!-- Nicolas: aca estaba la clase container y ademas agregamos el div col-sm-12-->
+	<div class="container-fluid"> 
 		<div class="row">
-			<div class="col-sm-10">
+			<div class="col-sm-12">
 				<div class="album text-muted">
 					{% for file in all_products %}
 						{% with image='gallery/img/'|add:file.0 %} 
@@ -407,36 +408,42 @@ function abrirCerrarCaja(){
 					{%endfor%}	
 				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="album">
-					<div class="container">
-						<form action="">
-							<div class="form-group">
-								<div class="input-group">
-  									<span class="input-group-addon">$</span>
-  									<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-  									<span class="input-group-addon">.00</span>
-								</div>
-							</div>
-							<div class="form-group">
-								<!-- <input id="pagarConTarjeta" type="button" class="btn btn-success btn-lg" value="Pagar con Tarjeta" onclick="" /> -->
-								<button type="button" class="btn btn-primary btn-lg">Pagar con Tarjeta</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
-		
+	 
+	<!-- 
+	<div class="album text-muted">
+		<div class="container">
+			<div class="row">
+
+				{% for file in all_products %}
+					  {% with image='gallery/img/'|add:file.0 %} 
+						<div class="card" style="width: 10rem;"> 
+						
+							<a href="javascript:guardarDatos('{{file.0}}','{{file.1}}')">
+							
+							 <img class="img-fluid" src="{% static image %}"/> 
+								<div class="card-body" align="center">
+   									<h4 class="card-title">{{file.1}}</h4>
+								</div>
+							</a>
+						</div>
+					{% endwith %}
+				{% empty %}
+					<h2>No imagenes disponibles!</h2>
+				{%endfor%}	
+
+			</div>
+		</div>
+	</div>	
+	-->
+</body>
 {% endblock %}
 
 {% block footer %}
-<footer class="text-muted">
-	<div class="container">
+<footer class="footerManualStle"> <!-- Le sacamos el valor del atributo class y queda como estaba antes. -->
+	<div style="color: #eceeef;" class="container">
 		<p>Dinnpro</p>
 	</div>
-	
 </footer>
-
 {% endblock %}

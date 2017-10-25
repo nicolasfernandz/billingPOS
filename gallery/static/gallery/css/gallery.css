@@ -26,7 +26,8 @@ body {
 }
 
 .album {
-  min-height: 50rem; /* Can be removed; just added for demo purposes */
+  /* Nicolas min-height: 50rem; /* Can be removed; just added for demo purposes */
+  min-height: 70rem;
   padding-top: 3rem;
   padding-bottom: 3rem;
   background-color: #f7f7f7;
@@ -38,6 +39,7 @@ body {
   padding: .75rem;
   margin-bottom: 2rem;
   border: 0;
+  margin-left: 7px; /*Nicolas*/
 }
 
 .card > img {
@@ -55,4 +57,12 @@ footer {
 
 footer p {
   margin-bottom: .25rem;
+}
+
+.footerManualStle {
+	/* position:absolute; */
+   	bottom:0;
+   	width:100%;
+   	height:20px;   /* Height of the footer */
+   	background:#292b2c;
 }
