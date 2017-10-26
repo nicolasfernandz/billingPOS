@@ -115,6 +115,28 @@
     </div>
   </div>
 </div>	
+
+<div id="error_apertura" class="modal fade" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h5>Error!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+       <div class="alert alert-danger" role="alert">
+  <strong></strong> No se pueden abrir la caja, no existe la caja.
+</div>
+      </div>
+      <div class="modal-footer">
+       
+      </div>
+    </div>
+  </div>
+</div>	
 {% csrf_token %}
 <input id='apertura_caja' type="hidden" name="apertura_caja" value="caja_cerrada">
 <script type="text/javascript">
@@ -292,7 +314,8 @@ function abrirCerrarCaja(){
 	             //alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
 	             //alert(XMLHttpRequest.status);
 	             //alert(XMLHttpRequest.responseText);
-	           // alert(XMLHttpRequest.errorThrown);   
+	        	 $('#error_apertura').modal();
+	             setTimeout(function() {$('#error_apertura').modal('hide');}, 2000);   
 	        	
 	         },
 	         success: function (result) {
@@ -337,7 +360,8 @@ function abrirCerrarCaja(){
 	             //alert(XMLHttpRequest.status);
 	             //alert(XMLHttpRequest.responseText);
 	           // alert(XMLHttpRequest.errorThrown);   
-	        	
+	        	 $('#error_apertura').modal();
+	             setTimeout(function() {$('#error_apertura').modal('hide');}, 2000);
 	         },
 	         success: function (result) {
 	        	
