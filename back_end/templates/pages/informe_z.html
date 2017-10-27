@@ -71,8 +71,9 @@
 						 <!-- Table -->
 							<table class="table table-hover" id="tablaInforme">
 								<thead>
-									<td><strong>Nº de Apertura</strong></td>
 									<td><strong>Nº de Infomre</strong></td>
+									<td><strong>Nº de Caja</strong></td>
+									<td><strong>Nº de Apertura Caja</strong></td>
 									<td><strong>Fecha de Apertura</strong></td>
 									<td><strong>Fecha de Cierre</strong></td>
 									<td><strong>Sub Total</strong></td>
@@ -83,15 +84,21 @@
 								<tbody>
 							{% for cierre in all_cierres %}
 									<tr>
-										<td><strong><a href=""> {{ cierre.AperturaCaja.id}} </a></strong></td>
 										<td><strong><a href=""> {{ cierre.id}} </a></strong></td>
+										<td><strong><a href=""> {{ cierre.AperturaCaja.Caja.id}} </a></strong></td>
+										<td><strong><a href=""> {{ cierre.AperturaCaja.id}} </a></strong></td>
 										<td><strong><a href=""> {{ cierre.AperturaCaja.fecha_apertura_Caja|date:"d-m-Y H:i:s" }} </a></strong></td>
 										<td><strong><a href=""> {{ cierre.fechaCierre|date:"d-m-Y H:i:s" }} </a> </strong></td>
 										<td><strong><a href=""> {{ cierre.total_sin_iva}} </a></strong></td>
 										<td><strong><a href=""> {{ cierre.monto_iva }} </a> </strong></td>
 										<td><strong><a href=""> {{ cierre.total }} </a> </strong></td>
 										<td>
-										<input id="verInformeZ" type="button" class="btn btn-default btn-xs" value="Ver Informe z" />
+										<a href="/back_end/verCierre/cierre-{{cierre.id}}" class="btn btn-default glyphicon glyphicon-search" data-toggle="tooltip" data-placement="left" title="Visualizar el informe de cierre de caja."></a>
+										
+										<!-- Ejemplos:
+										<a href="#" class="btn btn-info" role="button">Link Button</a>
+										<input id="verInformeZ" type="submit" class="btn btn-default btn-xs" value="Ver Informe z" data-toggle="tooltip" data-placement="left" title="Visualizar el informe de cierre de caja."/>
+										 -->
 										</td>
 									</tr>
 									{% endfor %}

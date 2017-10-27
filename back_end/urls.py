@@ -16,6 +16,9 @@ urlpatterns = [
 
     url(r'^logout', views.logout),
     
+        #Cierre/[CierreID] 
+    url(r'^cierre-(?P<cierre_id>[0-9]+)$', views.verCierre),
+    
         #Client/[clientID] 
     url(r'^(?P<venta_id>[0-9]+)$', views.verVenta, name = 'Ver Venta'),
     
@@ -30,5 +33,6 @@ urlpatterns = [
     
     #url(r'^saveClosingDay/', views.saveClosingDay, name = 'Save Closing Day'),
     
+
 
 ]

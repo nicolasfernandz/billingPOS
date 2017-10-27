@@ -125,6 +125,28 @@ def verVenta (request, venta_id):
     } 
     return render(request, 'pages/verVenta.html', context)
 
+@login_required  
+@has_role_decorator('contador')
+def verCierre (request, cierre_id):
+    cierre = Cierres.objects.get(id=cierre_id)
+    
+    #rows=execQuery.getTotalsToCloseBox(caja.id)  #caja.id): Aca va el id de Apertura Caja
+    
+    for rows in execQuery.getTotalsToCloseBox(1):
+        print (rows)
+    
+    '''
+    
+    lineasVenta = Linea_Venta.objects.filter(Venta=cierre)
+    context = {
+        'verLineasVenta': lineasVenta,
+        'verVenta': cierre,
+    } 
+    '''
+    context = {
+        
+    }
+    return render(request, 'pages/informexz.html', context)
 
 '''
 def newOpeningDay (request):

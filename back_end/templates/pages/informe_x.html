@@ -90,11 +90,11 @@
 										<td><strong><a href=""> {{ caja.estado}} </a></strong></td>
 										{% if caja.estado == 'ABIERTA' %}
 											<td>
-											<input id="generarInformeX" type="button" class="btn btn-default" value="Generar Inf. X" />
+											<input id="generarInformeX" type="button" class="btn btn-default btn-sm" value="Generar Inf. X" data-toggle="tooltip" data-placement="left" title="Esta opción hará un cierre de caja provisional, lo cual indica que al realizarlo podremos ver el importe recaudado hasta el momento y seguir trabajando en la venta de ticket sin cerrar el arqueo."/>
 											</td>
 										{% else %}
 											<td>
-											<input id="generarInformeXblockeado" type="button" class="btn btn-default btn-sm" value="Generar Inf. X" disabled/>
+											<input id="generarInformeXblockeado" type="button" class="btn btn-default btn-sm" value="Generar Inf. X" data-toggle="tooltip" data-placement="left" title="Esta opción hará un cierre de caja provisional, lo cual indica que al realizarlo podremos ver el importe recaudado hasta el momento y seguir trabajando en la venta de ticket sin cerrar el arqueo." disabled/>
 											</td>
 										{% endif %}
 										
