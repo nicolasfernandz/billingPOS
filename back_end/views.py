@@ -166,7 +166,6 @@ def verCierreX(request, caja_id):
     
     rows=execQuery.getTotalsToCloseBox(aperturaCaja.id)
     
-    rows.
     
     class SimpleClass(object):
         pass
