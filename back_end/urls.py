@@ -19,6 +19,9 @@ urlpatterns = [
         #Cierre/[CierreID] 
     url(r'^cierre-(?P<cierre_id>[0-9]+)$', views.verCierre),
     
+        #Cierre/[CierreID] 
+    url(r'^caja-(?P<caja_id>[0-9]+)$', views.verCierreX),
+    
         #Client/[clientID] 
     url(r'^(?P<venta_id>[0-9]+)$', views.verVenta, name = 'Ver Venta'),
     

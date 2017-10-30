@@ -90,11 +90,18 @@
 										<td><strong><a href=""> {{ caja.estado}} </a></strong></td>
 										{% if caja.estado == 'ABIERTA' %}
 											<td>
-											<input id="generarInformeX" type="button" class="btn btn-default btn-sm" value="Generar Inf. X" data-toggle="tooltip" data-placement="left" title="Esta opción hará un cierre de caja provisional, lo cual indica que al realizarlo podremos ver el importe recaudado hasta el momento y seguir trabajando en la venta de ticket sin cerrar el arqueo."/>
+												<!-- 
+												<input id="generarInformeX" type="button" class="btn btn-default btn-sm" value="Generar Inf. X" data-toggle="tooltip" data-placement="left" title="Esta opción hará un cierre de caja provisional, lo cual indica que al realizarlo podremos ver el importe recaudado hasta el momento y seguir trabajando en la venta de ticket sin cerrar el arqueo."/>
+												-->
+											 
+												<a href="/back_end/verCierre/caja-{{caja.id}}" class="btn btn-default glyphicon glyphicon-search" data-toggle="tooltip" data-placement="left" title="Esta opción hará un cierre de caja provisional, lo cual indica que al realizarlo podremos ver el importe recaudado hasta el momento y seguir trabajando en la venta de ticket sin cerrar el arqueo."></a>
 											</td>
 										{% else %}
 											<td>
-											<input id="generarInformeXblockeado" type="button" class="btn btn-default btn-sm" value="Generar Inf. X" data-toggle="tooltip" data-placement="left" title="Esta opción hará un cierre de caja provisional, lo cual indica que al realizarlo podremos ver el importe recaudado hasta el momento y seguir trabajando en la venta de ticket sin cerrar el arqueo." disabled/>
+												<button type="button" class="btn btn-default glyphicon glyphicon-search disabled"  data-toggle="tooltip" data-placement="left" title="Esta opción hará un cierre de caja provisional, lo cual indica que al realizarlo podremos ver el importe recaudado hasta el momento y seguir trabajando en la venta de ticket sin cerrar el arqueo."></button>
+												<!-- 
+												<input id="generarInformeXblockeado" type="button" class="btn btn-default glyphicon glyphicon-search" value="glyphicon glyphicon-search" data-toggle="tooltip" data-placement="left" title="Esta opción hará un cierre de caja provisional, lo cual indica que al realizarlo podremos ver el importe recaudado hasta el momento y seguir trabajando en la venta de ticket sin cerrar el arqueo." disabled/>
+												 -->
 											</td>
 										{% endif %}
 										

@@ -16,6 +16,7 @@ from back_end.forms import *
 from django.shortcuts import *
 from datetime import datetime
 from _overlapped import NULL
+from test.test_dis import simple
 
 def logout(request):
     auth_logout(request)
@@ -125,27 +126,83 @@ def verVenta (request, venta_id):
     } 
     return render(request, 'pages/verVenta.html', context)
 
+
+from django.db.models import Count, Min, Sum, Avg
+
 @login_required  
 @has_role_decorator('contador')
 def verCierre (request, cierre_id):
+    
     cierre = Cierres.objects.get(id=cierre_id)
     
-    #rows=execQuery.getTotalsToCloseBox(caja.id)  #caja.id): Aca va el id de Apertura Caja
+    row=execQuery.getTicketsByOpeningBoxNumber(cierre.AperturaCaja.id)
+    cierre.ticketDesde = row[0][1]
+    cierre.ticketHasta = row[0][2]
+    cierre.productosVendidos = row[0][3]
     
-    for rows in execQuery.getTotalsToCloseBox(1):
+    class SimpleClass(object):
+        pass
+    
+    row=execQuery.getSalesProductsCountsByOpeningBoxNumber(cierre.AperturaCaja.id)
+    simpleList  = []
+    for rows in execQuery.getSalesProductsCountsByOpeningBoxNumber(cierre.AperturaCaja.id):
+        x = SimpleClass()
+        x.nombre = rows[0]
+        x.cantidad = rows[1]
+        simpleList.append(x)
+        print (rows)
+                
+    context = {
+        'informe': cierre,
+        'productosVendidos': simpleList,
+    } 
+    
+    return render(request, 'pages/informexz.html', context)
+
+@login_required  
+@has_role_decorator('contador')
+def verCierreX(request, caja_id):
+    aperturaCaja = AperturaCaja.objects.filter(Caja_id = caja_id).last()
+    
+    rows=execQuery.getTotalsToCloseBox(aperturaCaja.id)
+    
+    rows.
+    
+    class SimpleClass(object):
+        pass
+            
+    x = SimpleClass()
+    x.AperturaCaja = aperturaCaja
+    x.total_sin_iva = rows[0][0]
+    x.monto_iva = rows[0][1]
+    x.total = rows[0][2]
+            
+    #models.Cierres.objects.create(fechaCierre= time, total_sin_iva=rows[0][0], monto_iva=rows[0][1], total=rows[0][2], AperturaCaja= caja)
+    
+    row=execQuery.getTicketsByOpeningBoxNumber(aperturaCaja.id)
+    x.ticketDesde = row[0][1]
+    x.ticketHasta = row[0][2]
+    x.productosVendidos = row[0][3]
+        
+    row=execQuery.getSalesProductsCountsByOpeningBoxNumber(aperturaCaja.id)
+    simpleList  = []
+    for rows in execQuery.getSalesProductsCountsByOpeningBoxNumber(aperturaCaja.id):
+        x = SimpleClass()
+        x.nombre = rows[0]
+        x.cantidad = rows[1]
+        simpleList.append(x)
         print (rows)
     
-    '''
+    print(simpleList)
     
-    lineasVenta = Linea_Venta.objects.filter(Venta=cierre)
+    for rows in execQuery.getZETAReportDetailsByOpeningBoxNumber(aperturaCaja.id):
+        print (rows)
+            
     context = {
-        'verLineasVenta': lineasVenta,
-        'verVenta': cierre,
+        'informe': x,
+        'productosVendidos': simpleList,
     } 
-    '''
-    context = {
-        
-    }
+    
     return render(request, 'pages/informexz.html', context)
 
 '''

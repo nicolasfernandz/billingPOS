@@ -55,3 +55,19 @@ def getSalesProductsCountsByOpeningBoxNumber(idAperturaCaja):
         row = cursor.fetchall() 
 
     return row
+
+def getTicketsByOpeningBoxNumber(idAperturaCaja):
+    with connection.cursor() as cursor:   
+        cursor.execute("SELECT ac.id as apertura, " +
+                              "min(v.id) as ticket_desde, " +
+                              "max(v.id) as ticket_hasta, " +
+                              "count(lv.*) as productos_vendidos " +
+                       "FROM gallery_aperturacaja ac, gallery_venta v, gallery_linea_venta lv " +
+                       "WHERE ac.id = v." + '"' + "AperturaCaja_id" + '" ' +
+                            "AND v.id = lv." + '"' + "Venta_id" + '" ' +
+                            "AND ac.id = %s "
+                        "Group by ac.id;", [idAperturaCaja])
+        #row = cursor.fetchone()
+        row = cursor.fetchall() 
+
+    return row
