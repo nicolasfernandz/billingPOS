@@ -116,6 +116,29 @@
   </div>
 </div>	
 
+<div id="pago_tarjeta" class="modal fade" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h5>Pago Tarjeta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+       
+  		<strong>Ingrese monto</strong>
+  		<input></input>
+		 
+      </div>
+     <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>	
 <div id="error_apertura" class="modal fade" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -206,7 +229,7 @@ function checkCaja(){
 	
 }
 
-function guardarDatos(url, precio, id){
+function guardarDatos(url, precio, id, observaciones){
 	
 	$.ajaxSetup({ 
 	     beforeSend: function(xhr, settings) {
@@ -231,10 +254,17 @@ function guardarDatos(url, precio, id){
 	         }
 	     } 
 	});
+	
+	
+	
 	var caja = document.getElementById('apertura_caja').value;
 	
 	
 	if(caja == 'caja_abierta'){
+		if(observaciones == 'pago_tarjeta'){
+			
+			 $('#pago_tarjeta').modal('show');
+		}
 	var param_url = url;
 	var param_id = id;
 	var param_precio = precio;
@@ -421,7 +451,7 @@ function abrirCerrarCaja(){
 					{% for file in all_products %}
 						{% with image='gallery/img/'|add:file.0 %} 
 						<div class="card" style="width: 10rem;"> 
-							<a href="javascript:guardarDatos('{{file.0}}','{{file.1}}','{{file.2}}')">
+							<a href="javascript:guardarDatos('{{file.0}}','{{file.1}}','{{file.2}}','{{file.3}}')">
 								<img class="img-fluid" src="{% static image %}"/> 
 								<div class="card-body" align="center">
 	   								<h4 class="card-title">{{file.1}}</h4>

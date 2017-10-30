@@ -54,9 +54,14 @@ class ImpuestosProductoFecha(models.Model):
     
     def __str__(self):
         return "(%s, %s, %s, %s)" % (self.Producto.nombre,self.fecha_inicio, self.fecha_fin, self.porcentaje_impuesto)
-    
+
+class Metodo_de_Pago(models.Model):
+    nombre_metodo_pago = models.CharField(max_length =250)
+    porcentaje_retencion = models.DecimalField(max_digits=15, decimal_places=2)  
+      
 # Create your models here.
 class Venta(models.Model):
+    MetodoPago = models.ForeignKey(Metodo_de_Pago, on_delete = models.CASCADE)
     AperturaCaja = models.ForeignKey(AperturaCaja, on_delete = models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True, blank=True)
     total_sin_iva = models.DecimalField(max_digits=15, decimal_places=2)
@@ -81,6 +86,3 @@ class Cierres(models.Model):
     monto_iva = models.DecimalField(max_digits=15, decimal_places=2)
     total = models.DecimalField(max_digits=15, decimal_places=2)
     
-class Metodo_de_Pago(models.Model):
-    nombre_metodo_pago = models.CharField(max_length =250)
-    porcentaje_retencion = models.DecimalField(max_digits=15, decimal_places=2)

@@ -111,7 +111,7 @@ def get_context_data(request,caja_id ):
             print( all_products)
             
             #----------------------------------------------------------------------
-            all_p = models.Producto.objects.values_list("foto", "id")
+            all_p = models.Producto.objects.values_list("foto", "id", "observaciones")
             
             prod = []
             for item in all_p:
@@ -131,7 +131,7 @@ def get_context_data(request,caja_id ):
                         
                         total_imp = (prc) * (imp[0]/100)
                         prc =  prc + total_imp
-                    aux = (item[0], '{0:.4}'.format(prc), item[1])
+                    aux = (item[0], '{0:.4}'.format(prc), item[1],item[2])
                     
                     
                     prod.append(aux)
@@ -175,7 +175,7 @@ def cargaVenta(request):
     #print('producto: ' +  nom_producto)
     #print('caja: ' + num_caja)
     #print('precio: ' +precio)
-    print('id: ' +id)
+    #print('id: ' +id)
     
     #obtengo la caja de la tabla
     caja = models.Caja.objects.get(id = num_caja)
@@ -189,6 +189,8 @@ def cargaVenta(request):
     #print(precio.first().precio_sin_iva) 
     impuesto = models.ImpuestosProductoFecha.objects.all().filter(fecha_inicio__lte=time, fecha_fin__gt=time, Producto=producto)                
     
+    metodoPago = models.Metodo_de_Pago.objects.get(id = 1)           
+    
     precio_sin_iva = 0+precio.first().precio_sin_iva
     #print(precio)
     montoIVA = 0
@@ -198,7 +200,7 @@ def cargaVenta(request):
     #print( apertura_caja.first())
     if apertura_caja.first() is not None:
         #print('entre a realizar una venta')
-        venta = models.Venta.objects.create(total_sin_iva =precio_sin_iva, fecha = time,monto_iva =montoIVA, AperturaCaja=apertura_caja.first(),total=montoIVA+precio_sin_iva )
+        venta = models.Venta.objects.create(total_sin_iva =precio_sin_iva, fecha = time,monto_iva =montoIVA, AperturaCaja=apertura_caja.first(),total=montoIVA+precio_sin_iva, MetodoPago = metodoPago )
         prec_prod = precio.first()
         imp_prod = impuesto.first()
         linea_venta = models.Linea_Venta.objects.create(PreciosProductoFecha=prec_prod, ImpuestosProductoFecha =imp_prod , Venta = venta)

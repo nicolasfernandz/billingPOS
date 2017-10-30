@@ -6,6 +6,7 @@ admin.site.register(Linea_Venta)
 admin.site.register(Producto)
 admin.site.register(Venta)
 admin.site.register(Caja)
+admin.site.register(Metodo_de_Pago)
 
 admin.site.register(ImpuestosProductoFecha)
 
