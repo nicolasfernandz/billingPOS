@@ -206,7 +206,8 @@ function checkCaja(){
 	
 }
 
-function guardarDatos(url, precio){
+function guardarDatos(url, precio, id){
+	
 	$.ajaxSetup({ 
 	     beforeSend: function(xhr, settings) {
 	         function getCookie(name) {
@@ -235,10 +236,11 @@ function guardarDatos(url, precio){
 	
 	if(caja == 'caja_abierta'){
 	var param_url = url;
+	var param_id = id;
 	var param_precio = precio;
 	var param_caja = document.getElementById('num_caja').value;
 	
-	var param =param_url + "," +param_precio+","+param_caja;
+	var param =param_url + "," +param_precio+","+param_caja+","+id;
 	//var param = c+","+d;
 	 var count;
      $.ajax({
@@ -419,7 +421,7 @@ function abrirCerrarCaja(){
 					{% for file in all_products %}
 						{% with image='gallery/img/'|add:file.0 %} 
 						<div class="card" style="width: 10rem;"> 
-							<a href="javascript:guardarDatos('{{file.0}}','{{file.1}}')">
+							<a href="javascript:guardarDatos('{{file.0}}','{{file.1}}','{{file.2}}')">
 								<img class="img-fluid" src="{% static image %}"/> 
 								<div class="card-body" align="center">
 	   								<h4 class="card-title">{{file.1}}</h4>

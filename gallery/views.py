@@ -70,19 +70,20 @@ class Index(TemplateView):
                         
                         total_imp = (prc) * (imp[0]/100)
                         prc =  prc + total_imp
-                    aux = (item[0], '{0:.4}'.format(prc))
+                    aux = (item[0], '{0:.4}'.format(prc), item[1])
                     
-                    prod.append(aux)
+                    #prod.append(aux)
+                    #print(prod)
                     break
                  
                 
                 
             #all_ = models.PreciosProductoFecha.objects.all().prefetch_related('prod_set')
      
-             
+            #print('+++++++++++++++++++++')
             context ={
                   #'all_products':all_products,
-                  'all_products':prod,
+                  #'all_products':prod,
             }
             #context['images'] = os.listdir(os.path.join(settings.STATIC_ROOT, 'gallery\img'))
            # print("Content ")
@@ -130,7 +131,7 @@ def get_context_data(request,caja_id ):
                         
                         total_imp = (prc) * (imp[0]/100)
                         prc =  prc + total_imp
-                    aux = (item[0], '{0:.4}'.format(prc))
+                    aux = (item[0], '{0:.4}'.format(prc), item[1])
                     
                     
                     prod.append(aux)
@@ -170,16 +171,17 @@ def cargaVenta(request):
     nom_producto = parametros[0].strip()
     precio = parametros[1].strip()
     num_caja = parametros[2].strip()
-    
+    id = parametros[3].strip()
     #print('producto: ' +  nom_producto)
     #print('caja: ' + num_caja)
     #print('precio: ' +precio)
+    print('id: ' +id)
     
     #obtengo la caja de la tabla
     caja = models.Caja.objects.get(id = num_caja)
     
     #obtengo el producto de la tabla
-    producto = models.Producto.objects.get(foto=nom_producto)
+    producto = models.Producto.objects.get(id=id)
     #print(producto.nombre)
     
     time =  timezone.now()
