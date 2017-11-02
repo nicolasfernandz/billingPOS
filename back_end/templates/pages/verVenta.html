@@ -49,48 +49,74 @@
             </div>
             <hr>
             <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default height" style="min-height: auto;">
+                        <div class="panel-heading">Datos de la empresa</div>
+                        <div class="panel-body">
+                        <div class="col-lg-2">
+                        Bar7a LTDA
+                        </div>
+                        <div class="col-lg-2">
+                        RUC 21158965000013
+                        </div>
+                        <div class="col-lg-2">
+                        Pando Calle 12
+                        </div>
+                        <div class="col-lg-6">
+                        Tel.: 0212 1255
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<div class="row">
                 <div class="col-xs-12 col-md-3 col-lg-3 pull-left">
                     <div class="panel panel-default height">
-                        <div class="panel-heading">Billing Details</div>
+                        <div class="panel-heading">Detalle de Facturación</div>
                         <div class="panel-body">
-                            <strong>David Peere:</strong><br>
-                            1111 Army Navy Drive<br>
-                            Arlington<br>
-                            VA<br>
-                            <strong>22 203</strong><br>
+                            <strong>Fecha:</strong>{{verVenta.fecha|date:"d/m/Y"}}<br>
+                            <strong> Hora:</strong>{{verVenta.fecha|date:"H:i"}}<br>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3 col-lg-3">
                     <div class="panel panel-default height">
-                        <div class="panel-heading">Payment Information</div>
+                        <div class="panel-heading">Información de Pago</div>
                         <div class="panel-body">
-                            <strong>Card Name:</strong> Visa<br>
-                            <strong>Card Number:</strong> ***** 332<br>
-                            <strong>Exp Date:</strong> 09/2020<br>
+                        	{% if verVenta.fomraDePago == 'Efectivo' %}
+                        		<strong>Forma de Pago:</strong> Efectivo<br>
+                        		<strong>Moneda:</strong> $ (Pesos Uruguayos)<br>
+                        	{% elif verVenta.formaDePago == 'TARJCREDITO' %}
+                        		<strong>Forma de Pago:</strong> Tarjeta de Crédito<br>
+                        		<strong>Card Name:</strong> Visa<br>
+                            	<strong>Card Number:</strong> ***** 332<br>
+                            	<strong>Exp Date:</strong> 09/2020<br>
+                            {% else %}
+                            	<strong>Forma de Pago:</strong> Tarjeta de Débito<br>
+                        		<strong>Card Name:</strong> Visa<br>
+                            	<strong>Card Number:</strong> ***** 332<br>
+                            	<strong>Exp Date:</strong> 09/2020<br>
+                        	{% endif %}
+
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3 col-lg-3">
                     <div class="panel panel-default height">
-                        <div class="panel-heading">Order Preferences</div>
+                        <div class="panel-heading">Preferencias del Pedido</div>
                         <div class="panel-body">
-                            <strong>Gift:</strong> No<br>
-                            <strong>Express Delivery:</strong> Yes<br>
-                            <strong>Insurance:</strong> No<br>
-                            <strong>Coupon:</strong> No<br>
+                            <strong>Regalo:</strong> No<br>
+                            <strong>Entrega Urgente:</strong> No<br>
+                            <strong>Seguro:</strong> No<br>
+                            <strong>Cupón:</strong> No<br>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3 col-lg-3 pull-right">
                     <div class="panel panel-default height">
-                        <div class="panel-heading">Shipping Address</div>
+                        <div class="panel-heading">Dirección de Envío</div>
                         <div class="panel-body">
-                            <strong>David Peere:</strong><br>
-                            1111 Army Navy Drive<br>
-                            Arlington<br>
-                            VA<br>
-                            <strong>22 203</strong><br>
+                            <strong>No presenta.</strong><br>
                         </div>
                     </div>
                 </div>

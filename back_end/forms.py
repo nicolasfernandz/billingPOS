@@ -12,3 +12,6 @@ class ClosingDayForm(forms.Form):
     fecha_creacion = forms.CharField(label='fecha_creacion', max_length=100)
     fecha_cierre = forms.CharField(label='fecha_cierre', max_length=100)
     
+class VentasPorFechasForm(forms.Form):
+    fecha_desde = forms.CharField(label='fecha_desde', max_length=100)
+    fecha_hasta = forms.CharField(label='fecha_hasta', max_length=100)

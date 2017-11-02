@@ -1,0 +1,110 @@
+ 
+{% extends "pages/baseBack.html" %}
+
+{% block title %}Sistema Facturacion{% endblock %}
+ 
+ {% block content %}
+ 
+ {% load static %}
+ <head>
+   <meta charset="utf-8">
+   
+    <!-- DataTables CSS -->
+    <link href="{% static 'datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css' %}" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="{% static 'datatables-responsive/css/dataTables.responsive.css' %}" rel="stylesheet">
+   
+ </head>
+ <body>            
+ 	<br>
+	<div class="row">
+    	<div class="col-lg-12 col-md-6">
+        	<div class="panel panel-primary">
+				<div class="panel-body">
+				    <div class="row">
+        				<div class="col-xs-12">
+            				<div class="text-left">
+               					<h2>Estado de las Cajas</h2>
+            				</div>
+            				<hr>
+            				<div class="row">
+            				{% for caja in all_cajas %}
+                				<div class="col-xs-12 col-md-3 col-lg-3 pull-left">
+				                    <div class="panel panel-default height">
+				                        <div class="panel-heading"><strong>Nº de Caja: {{ caja.id }} </strong></div>
+				                        <div class="panel-body">
+				                            <strong>Descripción: </strong>{{ caja.Descripcion }}<br>
+				                            <strong>Ubicación: </strong>{{ caja.ubicacion }}<br>
+				                            <strong>Modelo: </strong>{{ caja.modelo }}<br>
+				                            <strong>Nº de Serie: </strong>{{ caja.numero_serie }}<br>
+				                            <strong>Estado: </strong>{{ caja.estado }}<br>
+				                        </div>
+				                        <div class="panel-heading">Información de Facturación</div>
+				                        <div class="panel-body">
+				                        	<strong>Última Apertura</strong><br>
+				                            <strong>Fecha: </strong>{{ caja.AperturaCaja.fecha_apertura_Caja|date:"d-m-Y H:i:s"  }}<br>
+				                            <br>
+				                            <strong>Totales de Ventas</strong><br>
+				                            <strong>Sub Total: </strong>$ {{ caja.subTotal }}<br>
+				                            <strong>IVA: </strong>$ {{ caja.iva }}<br>
+				                            <strong>Total: </strong>$ {{ caja.total }}<br>
+				                        </div>
+				                        <div class="panel-heading">Información de Impresión</div>
+				                        <div class="panel-body">
+				                            <strong>Rollos Impresos: </strong>{{ caja.rollosImpresos }}<br>
+				                            <strong>Prom. de Rollos/Impresora: </strong>500<br>
+				                            <strong>Alerta: </strong>{{ caja.alertaImpresion }}<br>
+				                        </div>
+				                    </div>
+                				</div>
+							{% endfor %}
+            				</div>
+        				</div>
+    				</div>
+    				<div class="row">
+    					<div class="col-xs-12">
+    						<input id="actualizar" type="submit" onClick="window.location.reload(false)" class="btn btn btn-success btn-lg" value="Actualizar" data-toggle="tooltip" data-placement="left" title="Refrescar la pantalla para recuperar los últimos datos."/>
+    					</div>
+    				</div>
+    
+ <style>
+.height {
+    min-height: 200px;
+}
+
+.icon {
+    font-size: 47px;
+    color: #5CB85C;
+}
+
+.iconbig {
+    font-size: 77px;
+    color: #5CB85C;
+}
+
+.table > tbody > tr > .emptyrow {
+    border-top: none;
+}
+
+.table > thead > tr > .emptyrow {
+    border-bottom: none;
+}
+
+.table > tbody > tr > .highrow {
+    border-top: 3px solid;
+}
+</style>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+			
+{% endblock %}
+
+{% block encabezado %}
+
+</body>
+{% endblock %}

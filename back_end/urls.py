@@ -36,6 +36,8 @@ urlpatterns = [
     
     #url(r'^saveClosingDay/', views.saveClosingDay, name = 'Save Closing Day'),
     
-
+    url(r'^estado_de_cajas', views.verEstadoCajas, name = 'Ver Estado de las Cajas'),
+    
+    url(r'^ventasPorFechas/', views.ventasPorFechas, name = 'Save Closing Day'),
 
 ]

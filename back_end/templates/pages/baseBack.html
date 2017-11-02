@@ -119,12 +119,12 @@
                         </li>
                          -->
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> Apertura y Cierres de Caja<span class="fa arrow">
+                            <a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> Cajas<span class="fa arrow">
                                 <span>
                             </a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="/gestionArt/ganado/newGanado">Estado de Cajas</a>
+                                    <a href="/back_end/estado_de_cajas">Estado de Cajas</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -133,7 +133,7 @@
 
 					{% if user|has_role:'encargado' %}
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon glyphicon-book"></i> Informes X y Z<span class="fa arrow"></span>
+                            <a href="#"><i class="glyphicon glyphicon glyphicon-book"></i> Informes<span class="fa arrow"></span>
                             </a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -156,7 +156,10 @@
                             <ul class="nav nav-second-level">
 						{% if user|has_role:'contador' %}
                                 <li>
-                                    <a href="/back_end/reporte_ventas_producto">Ventas por producto</a>
+                                    <a href="/back_end/reporte_ventas_producto">Ventas por rango de fechas</a>
+                                </li>
+                                <li>
+                                    <a href="/back_end/reporte_ventas_producto2">Ventas por producto</a>
                                 </li>
                         {% endif %}
                                 <li>

@@ -10,11 +10,18 @@
    <meta charset="utf-8">
    
     <!-- DataTables CSS -->
+    <!-- Nicolas:se comenta por nuevo formato de tabla.
     <link href="{% static 'datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css' %}" rel="stylesheet">
-
+	-->
     <!-- DataTables Responsive CSS -->
+    <!-- Nicolas:se comenta por nuevo formato de tabla.
     <link href="{% static 'datatables-responsive/css/dataTables.responsive.css' %}" rel="stylesheet">
-   
+   	-->
+    <script>
+		$(document).ready(function() {
+		    $('#tablaInforme').DataTable();
+		} );
+	</script>
  </head>
  
  <body onload="show_cant_clients();" >
@@ -63,13 +70,14 @@
                                    
                                    							
                                     </div>
-                                    <div id="filtroVehicles">Cantidad Ventas!</div>
+                                    <div id="filtroVehicles">Informes Z</div>
                                 </div>
                             </div>
                         </div>
 						<div class="panel-body">
 						 <!-- Table -->
-							<table class="table table-hover" id="tablaInforme">
+							<!-- <table class="table table-hover" id="tablaInforme"> Nicolas:se comenta por nuevo formato de tabla.-->
+							<table id="tablaInforme" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 								<thead>
 									<td><strong>Nº de Infomre</strong></td>
 									<td><strong>Nº de Caja</strong></td>
@@ -87,8 +95,8 @@
 										<td><strong><a href=""> {{ cierre.id}} </a></strong></td>
 										<td><strong><a href=""> {{ cierre.AperturaCaja.Caja.id}} </a></strong></td>
 										<td><strong><a href=""> {{ cierre.AperturaCaja.id}} </a></strong></td>
-										<td><strong><a href=""> {{ cierre.AperturaCaja.fecha_apertura_Caja|date:"d-m-Y H:i:s" }} </a></strong></td>
-										<td><strong><a href=""> {{ cierre.fechaCierre|date:"d-m-Y H:i:s" }} </a> </strong></td>
+										<td><strong><a href=""> {{ cierre.AperturaCaja.fecha_apertura_Caja|date:"d/m/Y H:i:s" }} </a></strong></td>
+										<td><strong><a href=""> {{ cierre.fechaCierre|date:"d/m/Y H:i:s" }} </a> </strong></td>
 										<td><strong><a href=""> {{ cierre.total_sin_iva}} </a></strong></td>
 										<td><strong><a href=""> {{ cierre.monto_iva }} </a> </strong></td>
 										<td><strong><a href=""> {{ cierre.total }} </a> </strong></td>

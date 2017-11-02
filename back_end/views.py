@@ -111,7 +111,7 @@ def informe_z(request):
 def reporte_ventas_producto(request):
 #    all_ventas = Linea_Venta.objects.all().order_by('-id')
     context = {
- #       'all_ventas': all_ventas,
+#        'all_ventas_por_fechas': NULL,
     } 
     return render(request, 'pages/reporte_ventas_producto.html', context)
 
@@ -143,7 +143,6 @@ def verCierre (request, cierre_id):
     class SimpleClass(object):
         pass
     
-    row=execQuery.getSalesProductsCountsByOpeningBoxNumber(cierre.AperturaCaja.id)
     simpleList  = []
     for rows in execQuery.getSalesProductsCountsByOpeningBoxNumber(cierre.AperturaCaja.id):
         x = SimpleClass()
@@ -166,7 +165,6 @@ def verCierreX(request, caja_id):
     
     rows=execQuery.getTotalsToCloseBox(aperturaCaja.id)
     
-    
     class SimpleClass(object):
         pass
             
@@ -186,10 +184,10 @@ def verCierreX(request, caja_id):
     row=execQuery.getSalesProductsCountsByOpeningBoxNumber(aperturaCaja.id)
     simpleList  = []
     for rows in execQuery.getSalesProductsCountsByOpeningBoxNumber(aperturaCaja.id):
-        x = SimpleClass()
-        x.nombre = rows[0]
-        x.cantidad = rows[1]
-        simpleList.append(x)
+        item = SimpleClass()
+        item.nombre = rows[0]
+        item.cantidad = rows[1]
+        simpleList.append(item)
         print (rows)
     
     print(simpleList)
@@ -203,6 +201,99 @@ def verCierreX(request, caja_id):
     } 
     
     return render(request, 'pages/informexz.html', context)
+
+@login_required  
+@has_role_decorator('contador')
+def verEstadoCajas (request):
+    
+    all_cajas = Caja.objects.all().order_by('id')
+    for caja in all_cajas:
+        try:
+            aperturaCajaAbierta = AperturaCaja.objects.filter(Caja=caja, fecha_cierre_Caja__isnull=True)
+        except MultipleObjectsReturned:
+            print("Error, se obtuvieron mas de 1 caja abierta.")
+        else:
+            if aperturaCajaAbierta is not NULL and aperturaCajaAbierta.count() > 0:
+                caja.estado = 'ABIERTA' 
+                caja.AperturaCaja = aperturaCajaAbierta.latest('id')
+                print("Caja " + str(caja.id) + " abierta.")
+            else:
+                caja.estado = 'CERRADA'
+                aperturaCajaLast = AperturaCaja.objects.filter(Caja=caja).latest('id')
+                caja.AperturaCaja = aperturaCajaLast 
+                print("Caja " + str(caja.id) + " abierta.")
+
+
+        try:
+            all_last_ventas_por_caja = Venta.objects.filter(AperturaCaja_id=caja.AperturaCaja.id)
+            if all_last_ventas_por_caja is not NULL and all_last_ventas_por_caja.count() > 0:
+                caja.rollosImpresos = all_last_ventas_por_caja.count()
+                caja.subTotal = all_last_ventas_por_caja.aggregate(Sum('total_sin_iva')).get('total_sin_iva__sum')
+                caja.iva = all_last_ventas_por_caja.aggregate(Sum('monto_iva')).get('monto_iva__sum')
+                caja.total = all_last_ventas_por_caja.aggregate(Sum('total')).get('total__sum')
+                
+                if caja.rollosImpresos > 400:
+                    caja.alertaImpresion = 'Alerta de Rollos!'
+                else:
+                    caja.alertaImpresion = 'Ninguna.' 
+            else:
+                caja.rollosImpresos = 0
+                caja.subTotal = 0
+                caja.iva = 0
+                caja.total = 0
+                caja.alertaImpresion = 'Ninguna.' 
+        except:
+            print("Error.")
+        
+    context = {
+        'all_cajas': all_cajas,
+    } 
+
+    return render(request, 'pages/estado_de_cajas.html', context)
+
+def ventasPorFechas(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = VentasPorFechasForm(request.POST)
+        print(form)
+        
+        errors = []
+        error = False
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # redirect to a new URL:
+            fecha_desde = form.cleaned_data['fecha_desde']
+            fecha_hasta = form.cleaned_data['fecha_hasta']
+                        
+            from datetime import datetime
+            
+            dtDesde = datetime.strptime(fecha_desde, "%d/%m/%Y")
+            dtHasta = datetime.strptime(fecha_hasta, "%d/%m/%Y")
+
+            class SimpleClass(object):
+                pass    
+            
+            x = SimpleClass()
+            x.fechaDesde = fecha_desde
+            x.fechaHasta = fecha_hasta
+            
+            all_ventas_por_fecjas = Venta.objects.filter(fecha__range=(dtDesde, dtHasta))
+            
+            if all_ventas_por_fecjas.count() <= 0:
+                errors.append("No se han encontrado datos para las fechas ingresadas.")
+                                                         
+            if not error:
+                return render(request, 'pages/reporte_ventas_producto.html', {'errors': errors, 'all_ventas_por_fechas': all_ventas_por_fecjas,
+                                                                              'fechas': x})
+                            
+        else:
+            errors.append("Problemas con el formulario, comuniquese con el administrador.")
+            return render(request, 'pages/reporte_ventas_producto.html', {'errors': errors})
+            
+    #return redirect("/back_end/newOpeningDay")
+
 
 '''
 def newOpeningDay (request):
