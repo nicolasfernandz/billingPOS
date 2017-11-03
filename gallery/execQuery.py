@@ -71,3 +71,28 @@ def getTicketsByOpeningBoxNumber(idAperturaCaja):
         row = cursor.fetchall() 
 
     return row
+
+
+def getVentaPorProductoPorFechas(fromDate, endDate):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT p.nombre, " +
+                                "p.aplica_impuesto, " + 
+                                "ipf.porcentaje_impuesto, " + 
+                                "count(p.id) as cantidad, " +
+                                "coalesce(sum(v.total_sin_iva),0) as sub_total_ventas, " +
+                                "coalesce(sum(v.monto_iva),0) as iva_venta, " + 
+                                "coalesce(sum(v.total),0) as total_venta " +        
+                        "FROM gallery_venta v, " + 
+                                "gallery_linea_venta lv, " + 
+                                "gallery_impuestosproductofecha ipf, " +
+                                "gallery_preciosproductofecha ppf, " + 
+                                "gallery_producto p " +
+                        #"WHERE v.fecha between to_timestamp('2015-12-02 12:20:48', 'YYYY-MM-DD HH24:MI:SS') and to_timestamp('2018-12-02 12:20:48', 'YYYY-MM-DD HH24:MI:SS') " +
+                        "WHERE v.fecha between to_timestamp(" + str('%s') + ", 'YYYY-MM-DD HH24:MI:SS') and to_timestamp('2017-12-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') " +
+                                "AND v.id = lv." + '"' + "Venta_id" + '" ' +
+                                "AND lv." + '"' + "PreciosProductoFecha_id"  + '"' + "= ppf.id " +
+                                "AND lv." + '"' + "ImpuestosProductoFecha_id"  + '"' + "= ipf.id " +
+                                "AND ppf." + '"' + "Producto_id" + '"' + "= p.id " +
+                        "Group by(p.nombre, p.aplica_impuesto, ipf.porcentaje_impuesto);", ([fromDate],[endDate]))
+        row = cursor.fetchall()
+    return row

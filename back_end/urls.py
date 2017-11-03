@@ -38,6 +38,10 @@ urlpatterns = [
     
     url(r'^estado_de_cajas', views.verEstadoCajas, name = 'Ver Estado de las Cajas'),
     
-    url(r'^ventasPorFechas/', views.ventasPorFechas, name = 'Save Closing Day'),
+    url(r'^ventasPorFechas/', views.ventasPorFechas, name = 'Ventas por fechas'),
+      
+    url(r'^ventasPorProductoPorFechas/', views.ventasPorProductoPorFechas, name = 'Ventas por productos por fechas'),
+    
+    url(r'^rreporte_ventas_producto_fecha', views.reporte_ventas_producto_fecha, name = 'Ventas por productos por fechas'),
 
 ]

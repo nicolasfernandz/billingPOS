@@ -105,16 +105,6 @@ def informe_z(request):
     } 
     return render(request, 'pages/informe_z.html', context)
 
-
-@login_required 
-@has_role_decorator('contador')
-def reporte_ventas_producto(request):
-#    all_ventas = Linea_Venta.objects.all().order_by('-id')
-    context = {
-#        'all_ventas_por_fechas': NULL,
-    } 
-    return render(request, 'pages/reporte_ventas_producto.html', context)
-
 @login_required  
 @has_role_decorator('contador')
 def verVenta (request, venta_id):
@@ -251,6 +241,15 @@ def verEstadoCajas (request):
 
     return render(request, 'pages/estado_de_cajas.html', context)
 
+@login_required 
+@has_role_decorator('contador')
+def reporte_ventas_producto(request):
+#    all_ventas = Linea_Venta.objects.all().order_by('-id')
+    context = {
+#        'all_ventas_por_fechas': NULL,
+    } 
+    return render(request, 'pages/reporte_ventas_producto.html', context)
+
 def ventasPorFechas(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -294,6 +293,70 @@ def ventasPorFechas(request):
             
     #return redirect("/back_end/newOpeningDay")
 
+@login_required 
+@has_role_decorator('contador')
+def reporte_ventas_producto_fecha(request):
+#    all_ventas = Linea_Venta.objects.all().order_by('-id')
+    context = {
+#        'all_ventas_por_fechas': NULL,
+    } 
+    return render(request, 'pages/reporte_ventas_producto_fecha.html', context)
+
+def ventasPorProductoPorFechas(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = VentasPorFechasForm(request.POST)
+        print(form)
+        
+        errors = []
+        error = False
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # redirect to a new URL:
+            fecha_desde = form.cleaned_data['fecha_desde']
+            fecha_hasta = form.cleaned_data['fecha_hasta']
+                        
+            from datetime import datetime
+            
+            dtDesde = datetime.strptime(fecha_desde, "%d/%m/%Y")
+            dtHasta = datetime.strptime(fecha_hasta, "%d/%m/%Y")
+            
+            print (dtDesde.strftime("%Y-%d-%m"))
+            
+            
+            
+            all_ventas_por_fecjas = Venta.objects.filter(fecha__range=(dtDesde, dtHasta)).annotate(Sum('total_sin_iva'), Sum('monto_iva'), Sum('total'))
+            
+            #all_ventas_por_fecjas.annotate(Sum('total_sin_iva'), Sum('monto_iva'), Sum('total'))
+                        
+            rows = execQuery.getVentaPorProductoPorFechas( dtDesde.strftime("%Y-%d-%m"), fecha_hasta)
+            
+            for rowds in execQuery.getVentaPorProductoPorFechas(dtDesde.strftime("%Y-%d-%m"), fecha_hasta):
+                print (rowds)
+
+            class SimpleClass(object):
+                pass    
+            
+            x = SimpleClass()
+            x.fechaDesde = fecha_desde
+            x.fechaHasta = fecha_hasta
+            
+            
+            
+            if all_ventas_por_fecjas.count() <= 0:
+                errors.append("No se han encontrado datos para las fechas ingresadas.")
+                                                         
+            if not error:
+                return render(request, 'pages/reporte_ventas_producto_fecha.html', {'errors': errors, 'all_ventas_por_fechas': all_ventas_por_fecjas,
+                                                                              'fechas': x})
+                            
+        else:
+            errors.append("Problemas con el formulario, comuniquese con el administrador.")
+            return render(request, 'pages/reporte_ventas_producto_fecha.html', {'errors': errors})
+            
+    #return redirect("/back_end/newOpeningDay")
 
 '''
 def newOpeningDay (request):
