@@ -121,7 +121,7 @@
     <div class="modal-content">
       <div class="modal-header">
       <h5>Pago Tarjeta</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -129,12 +129,12 @@
       <div class="modal-body">
        
   		<strong>Ingrese monto</strong>
-  		<input></input>
+  		<input type="number" id="value_monto"></input>
 		 
       </div>
      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-success" id="btn_venta">Realizar Venta</button>
       </div>
     </div>
   </div>
@@ -229,7 +229,35 @@ function checkCaja(){
 	
 }
 
+function guardarDatosAux(url, precio, id, observaciones){
+	var caja = document.getElementById('apertura_caja').value;
+	
+	if(caja == 'caja_abierta'){
+	if(observaciones == 'pago_tarjeta'){
+		
+		 $('#pago_tarjeta').modal('show');
+		 $(document).ready(function () {
+			    $("button[id=btn_venta]").on('click', function (e) {
+			    	var value = document.getElementById('value_monto').value;
+			    	 guardarDatos(url, value, id, observaciones);
+			    	 //alert(value);
+			    	 $('#pago_tarjeta').modal('hide');
+			    });
+			});
+	}else{
+		
+		guardarDatos(url, precio, id, observaciones);
+	}
+	
+	}else{
+		
+		guardarDatos(url, precio, id, observaciones);
+		}
+	
+}
+
 function guardarDatos(url, precio, id, observaciones){
+	$('#pago_tarjeta').modal('hide');
 	
 	$.ajaxSetup({ 
 	     beforeSend: function(xhr, settings) {
@@ -261,10 +289,7 @@ function guardarDatos(url, precio, id, observaciones){
 	
 	
 	if(caja == 'caja_abierta'){
-		if(observaciones == 'pago_tarjeta'){
-			
-			 $('#pago_tarjeta').modal('show');
-		}
+		
 	var param_url = url;
 	var param_id = id;
 	var param_precio = precio;
@@ -298,6 +323,11 @@ function guardarDatos(url, precio, id, observaciones){
          }
      });
      var a = count;
+     
+     
+		
+		
+		
 	}else{
 		
 		 $('#caja_cerrada').modal();
@@ -451,7 +481,7 @@ function abrirCerrarCaja(){
 					{% for file in all_products %}
 						{% with image='gallery/img/'|add:file.0 %} 
 						<div class="card" style="width: 10rem;"> 
-							<a href="javascript:guardarDatos('{{file.0}}','{{file.1}}','{{file.2}}','{{file.3}}')">
+							<a href="javascript:guardarDatosAux('{{file.0}}','{{file.1}}','{{file.2}}','{{file.3}}')">
 								<img class="img-fluid" src="{% static image %}"/> 
 								<div class="card-body" align="center">
 	   								<h4 class="card-title">{{file.1}}</h4>
