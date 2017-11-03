@@ -88,11 +88,12 @@ def getVentaPorProductoPorFechas(fromDate, endDate):
                                 "gallery_preciosproductofecha ppf, " + 
                                 "gallery_producto p " +
                         #"WHERE v.fecha between to_timestamp('2015-12-02 12:20:48', 'YYYY-MM-DD HH24:MI:SS') and to_timestamp('2018-12-02 12:20:48', 'YYYY-MM-DD HH24:MI:SS') " +
-                        "WHERE v.fecha between to_timestamp(" + str('%s') + ", 'YYYY-MM-DD HH24:MI:SS') and to_timestamp('2017-12-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') " +
+                        "WHERE v.fecha between date %s and date %s " +
                                 "AND v.id = lv." + '"' + "Venta_id" + '" ' +
                                 "AND lv." + '"' + "PreciosProductoFecha_id"  + '"' + "= ppf.id " +
                                 "AND lv." + '"' + "ImpuestosProductoFecha_id"  + '"' + "= ipf.id " +
                                 "AND ppf." + '"' + "Producto_id" + '"' + "= p.id " +
-                        "Group by(p.nombre, p.aplica_impuesto, ipf.porcentaje_impuesto);", ([fromDate],[endDate]))
+                        #"Group by(p.nombre, p.aplica_impuesto, ipf.porcentaje_impuesto);", ([fromDate],[endDate]))
+                        "Group by(p.nombre, p.aplica_impuesto, ipf.porcentaje_impuesto);", [fromDate, endDate])
         row = cursor.fetchall()
     return row

@@ -331,9 +331,9 @@ def ventasPorProductoPorFechas(request):
             
             #all_ventas_por_fecjas.annotate(Sum('total_sin_iva'), Sum('monto_iva'), Sum('total'))
                         
-            rows = execQuery.getVentaPorProductoPorFechas( dtDesde.strftime("%Y-%d-%m"), fecha_hasta)
+            rows = execQuery.getVentaPorProductoPorFechas( dtDesde.strftime("%Y-%d-%m"), dtHasta.strftime("%Y-%d-%m"))
             
-            for rowds in execQuery.getVentaPorProductoPorFechas(dtDesde.strftime("%Y-%d-%m"), fecha_hasta):
+            for rowds in execQuery.getVentaPorProductoPorFechas(fecha_desde, fecha_hasta):
                 print (rowds)
 
             class SimpleClass(object):
