@@ -169,7 +169,7 @@ def cargaVenta(request):
     parametros = content.split(',')
     
     nom_producto = parametros[0].strip()
-    precio = parametros[1].strip()
+    precio_param = parametros[1].strip()
     num_caja = parametros[2].strip()
     id = parametros[3].strip()
     #print('producto: ' +  nom_producto)
