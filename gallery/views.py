@@ -172,6 +172,7 @@ def cargaVenta(request):
     precio_param = parametros[1].strip()
     num_caja = parametros[2].strip()
     id = parametros[3].strip()
+    observaciones = parametros[4].strip()
     #print('producto: ' +  nom_producto)
     #print('caja: ' + num_caja)
     #print('precio: ' +precio)
@@ -185,13 +186,21 @@ def cargaVenta(request):
     #print(producto.nombre)
     
     time =  timezone.now()
-    precio = models.PreciosProductoFecha.objects.filter(fecha_inicio__lte=time, fecha_fin__gt=time, Producto=producto)
+    
+    print(observaciones)
+    precio = models.PreciosProductoFecha.objects.filter(fecha_inicio__lte=time, fecha_fin__gt=time, Producto=producto)    
+    if(observaciones == "pago_tarjeta"):
+        precio_sin_iva = int(precio_param)
+    else:
+        precio_sin_iva = 0+precio.first().precio_sin_iva
+    prec_prod = precio.first()
+    
     #print(precio.first().precio_sin_iva) 
     impuesto = models.ImpuestosProductoFecha.objects.all().filter(fecha_inicio__lte=time, fecha_fin__gt=time, Producto=producto)                
     
     metodoPago = models.Metodo_de_Pago.objects.get(id = 1)           
     
-    precio_sin_iva = 0+precio.first().precio_sin_iva
+    
     #print(precio)
     montoIVA = 0
     if(impuesto.first() is not None):
@@ -201,8 +210,9 @@ def cargaVenta(request):
     if apertura_caja.first() is not None:
         #print('entre a realizar una venta')
         venta = models.Venta.objects.create(total_sin_iva =precio_sin_iva, fecha = time,monto_iva =montoIVA, AperturaCaja=apertura_caja.first(),total=montoIVA+precio_sin_iva, MetodoPago = metodoPago )
-        prec_prod = precio.first()
+        #prec_prod = precio.first()
         imp_prod = impuesto.first()
+        #if(observaciones != "pago_tarjeta"):
         linea_venta = models.Linea_Venta.objects.create(PreciosProductoFecha=prec_prod, ImpuestosProductoFecha =imp_prod , Venta = venta)
     
     

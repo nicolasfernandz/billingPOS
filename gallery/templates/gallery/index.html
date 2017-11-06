@@ -294,8 +294,8 @@ function guardarDatos(url, precio, id, observaciones){
 	var param_id = id;
 	var param_precio = precio;
 	var param_caja = document.getElementById('num_caja').value;
-	
-	var param =param_url + "," +param_precio+","+param_caja+","+id;
+	var param_observaciones = observaciones;
+	var param =param_url + "," +param_precio+","+param_caja+","+id+","+param_observaciones;
 	//var param = c+","+d;
 	 var count;
      $.ajax({
