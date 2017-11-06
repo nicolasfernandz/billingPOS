@@ -90,10 +90,10 @@
 								<tbody>
 								{% for lineaVenta in all_lineaVentas %}
 									<tr>
-										<td><strong><a href="/back_end/verVenta/{{lineaVenta.Venta.id}}"> {{ lineaVenta.Venta.id }} </a> </strong></td>
-										<td><strong><a href="/back_end/verVenta/{{lineaVenta.Venta.id}}"> {{ lineaVenta.Venta.fecha|date:"d-m-Y H:i:s" }} </a> </strong></td>
-										<td><strong><a href="/back_end/verVenta/{{lineaVenta.Venta.id}}"> {{ lineaVenta.PreciosProductoFecha.Producto.nombre }} </a> </strong></td>
-										<td><strong><a href="/back_end/verVenta/{{lineaVenta.Venta.id}}"> {{ lineaVenta.Venta.total }} </a> </strong></td>										
+										<td><a href="/back_end/verVenta/{{lineaVenta.Venta.id}}"> {{ lineaVenta.Venta.id }} </a></td>
+										<td><a href="/back_end/verVenta/{{lineaVenta.Venta.id}}"> {{ lineaVenta.Venta.fecha|date:"d-m-Y H:i:s" }} </a></td>
+										<td><a href="/back_end/verVenta/{{lineaVenta.Venta.id}}"> {{ lineaVenta.PreciosProductoFecha.Producto.nombre }} </a></td>
+										<td><a href="/back_end/verVenta/{{lineaVenta.Venta.id}}"> {{ lineaVenta.Venta.total }} </a></td>										
 									</tr>
 								{% endfor %}
 								</tbody>
