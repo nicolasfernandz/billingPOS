@@ -318,24 +318,10 @@ def ventasPorProductoPorFechas(request):
             fecha_desde = form.cleaned_data['fecha_desde']
             fecha_hasta = form.cleaned_data['fecha_hasta']
                         
-            from datetime import datetime
-            
-            dtDesde = datetime.strptime(fecha_desde, "%d/%m/%Y")
-            dtHasta = datetime.strptime(fecha_hasta, "%d/%m/%Y")
-            
-            print (dtDesde.strftime("%Y-%d-%m"))
-            
-            
-            
-            all_ventas_por_fecjas = Venta.objects.filter(fecha__range=(dtDesde, dtHasta)).annotate(Sum('total_sin_iva'), Sum('monto_iva'), Sum('total'))
-            
-            #all_ventas_por_fecjas.annotate(Sum('total_sin_iva'), Sum('monto_iva'), Sum('total'))
-                        
-            rows = execQuery.getVentaPorProductoPorFechas( dtDesde.strftime("%Y-%d-%m"), dtHasta.strftime("%Y-%d-%m"))
-            
-            for rowds in execQuery.getVentaPorProductoPorFechas(fecha_desde, fecha_hasta):
-                print (rowds)
-
+            #from datetime import datetime
+            #dtDesde = datetime.strptime(fecha_desde, "%d/%m/%Y")
+            #dtHasta = datetime.strptime(fecha_hasta, "%d/%m/%Y")
+          
             class SimpleClass(object):
                 pass    
             
@@ -343,15 +329,30 @@ def ventasPorProductoPorFechas(request):
             x.fechaDesde = fecha_desde
             x.fechaHasta = fecha_hasta
             
+            all_ventas_por_producto_por_fecha = []
             
-            
-            if all_ventas_por_fecjas.count() <= 0:
+            for theRow in execQuery.getVentaPorProductoPorFechas(fecha_desde, fecha_hasta):
+                print (theRow)
+                item = SimpleClass()
+                item.nombre = theRow[0]
+                if theRow[1] == True:
+                    item.impuesto = "SI"
+                else:
+                    item.impuesto = "NO"
+                    
+                item.porcentajeImpuesto = theRow[2]  
+                item.cantidadVentas = theRow[3]
+                item.subTotalVentas = theRow[4]
+                item.IVAVentas = theRow[5]
+                item.totalVentas = theRow[6]
+                all_ventas_por_producto_por_fecha.append(item)
+                
+            if len(all_ventas_por_producto_por_fecha)<= 0:
                 errors.append("No se han encontrado datos para las fechas ingresadas.")
                                                          
             if not error:
-                return render(request, 'pages/reporte_ventas_producto_fecha.html', {'errors': errors, 'all_ventas_por_fechas': all_ventas_por_fecjas,
+                return render(request, 'pages/reporte_ventas_producto_fecha.html', {'errors': errors, 'all_ventas_por_producto_por_fecha': all_ventas_por_producto_por_fecha,
                                                                               'fechas': x})
-                            
         else:
             errors.append("Problemas con el formulario, comuniquese con el administrador.")
             return render(request, 'pages/reporte_ventas_producto_fecha.html', {'errors': errors})

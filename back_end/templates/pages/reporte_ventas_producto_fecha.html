@@ -70,11 +70,11 @@ Facturacion{% endblock %} {% block content %} {% load static %}
 							</div>
 						</div>
 						<div id='estadoclients' class="col-xs-7">
-							<h1>Ventas por rango de fechas</h1>
+							<h1>Ventas por Producto por rango de fechas</h1>
 						</div>
 						<div class="col-xs-3 text-right">
 							<div class="huge" id="cant_clients"></div>
-							<div id="filtroVehicles">Cantidad de Ventas por fecha.</div>
+							<div id="filtroVehicles">Cantidad de Productos.</div>
 						</div>
 					</div>
 				</div>
@@ -170,21 +170,25 @@ Facturacion{% endblock %} {% block content %} {% load static %}
 								cellspacing="0" width="100%">
 								<thead>
 									<tr>
-										<th>Nº de Factura</th>
-										<th>Fecha</th>
-										<th>Sub Total</th>
-										<th>Iva</th>
-										<th>Total</th>
+										<th>Producto</th>
+										<th>Aplica Impuesto</th>
+										<th>Porcentaje Impuesto</th>
+										<th>Cantidad de Ventas</th>
+										<th>Sub Total Ventas</th>
+										<th>IVA Ventas</th>
+										<th>Total Ventas</th>
 									</tr>
 								</thead>
 								<tbody>
-								{% for venta in all_ventas_por_fechas %}
+								{% for venta in all_ventas_por_producto_por_fecha %}
 									<tr>
-										<td>{{venta.id}}</td>
-										<td>{{venta.fecha|date:"d/m/Y H:i:s"}}</td>
-										<td>{{venta.total_sin_iva}}</td>
-										<td>{{venta.monto_iva}}</td>
-										<td>{{venta.total}}</td>
+										<td>{{venta.nombre}}</td>
+										<td>{{venta.impuesto}}</td>
+										<td>{{venta.porcentajeImpuesto}}</td>
+										<td>{{venta.cantidadVentas}}</td>
+										<td>{{venta.subTotalVentas}}</td>
+										<td>{{venta.IVAVentas}}</td>
+										<td>{{venta.totalVentas}}</td>
 									</tr>
 								{% endfor %}
 								</tbody>
