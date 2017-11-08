@@ -45,7 +45,6 @@ def login_success(request):
                 if (caja == 'caja3'):
                     return redirect("/billingPOS/3")
     else:
-        #all_ventas = Linea_Venta.objects.all().order_by('-id')
         context = {
             #'all_ventas': all_ventas,
         } 
@@ -53,13 +52,41 @@ def login_success(request):
         return redirect("/back_end/home", context)
 
 @login_required    
-def home(request):
+def home2(request):
     all_lineaVentas = Linea_Venta.objects.all().order_by('-id')
     context = {
         'all_lineaVentas': all_lineaVentas,
     } 
     return render(request, 'pages/home.html', context)
 
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+@login_required    
+def home(request):
+    all_lineaVentas = Linea_Venta.objects.all().order_by('-id')
+    
+    paginator = Paginator(all_lineaVentas, 10) # Show 10 sale per page
+    
+    page = request.GET.get('page')
+    
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+
+    return render(request, 'pages/home.html', {'all_lineaVentas': contacts})
+    
+    '''
+    context = {
+        'all_lineaVentas': all_lineaVentas,
+    } 
+    return render(request, 'pages/home.html', context)
+    '''
 
 @login_required 
 @has_role_decorator('encargado')
@@ -98,7 +125,6 @@ def informe_x(request):
 @login_required 
 @has_role_decorator('encargado')
 def informe_z(request):
-    #  all_cierres = Linea_Venta.objects.all().order_by('-id')
     all_cierres = Cierres.objects.all().order_by('-id')
     context = {
         'all_cierres': all_cierres,
@@ -244,7 +270,6 @@ def verEstadoCajas (request):
 @login_required 
 @has_role_decorator('contador')
 def reporte_ventas_producto(request):
-#    all_ventas = Linea_Venta.objects.all().order_by('-id')
     context = {
 #        'all_ventas_por_fechas': NULL,
     } 
@@ -296,7 +321,6 @@ def ventasPorFechas(request):
 @login_required 
 @has_role_decorator('contador')
 def reporte_ventas_producto_fecha(request):
-#    all_ventas = Linea_Venta.objects.all().order_by('-id')
     context = {
 #        'all_ventas_por_fechas': NULL,
     } 
