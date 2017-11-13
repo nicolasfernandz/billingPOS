@@ -27,6 +27,7 @@ from django.contrib.auth import logout as auth_logout
 from django.template.context_processors import request
 
 from django.http import HttpResponse, HttpResponseRedirect
+from test.test_functools import decimal
 
 def logout(request):
     auth_logout(request)
@@ -187,19 +188,25 @@ def cargaVenta(request):
     
     time =  timezone.now()
     
-    print(observaciones)
+    #print(observaciones)
     precio = models.PreciosProductoFecha.objects.filter(fecha_inicio__lte=time, fecha_fin__gt=time, Producto=producto)    
-    if(observaciones == "pago_tarjeta"):
-        precio_sin_iva = int(precio_param)
-    else:
-        precio_sin_iva = 0+precio.first().precio_sin_iva
+    
     prec_prod = precio.first()
     
     #print(precio.first().precio_sin_iva) 
     impuesto = models.ImpuestosProductoFecha.objects.all().filter(fecha_inicio__lte=time, fecha_fin__gt=time, Producto=producto)                
     
-    metodoPago = models.Metodo_de_Pago.objects.get(id = 1)           
-    
+               
+    if(observaciones == "pago_tarjeta"):
+        metodoPago = models.Metodo_de_Pago.objects.get(id = 2)
+        pre =  int(precio_param)
+        print("precio_param_: " + str(pre))
+        imp =  impuesto.first().porcentaje_impuesto
+        print("imp_param_: " + str(imp))
+        precio_sin_iva = (100-imp) * pre / 100
+    else:
+        precio_sin_iva = 0+precio.first().precio_sin_iva
+        metodoPago = models.Metodo_de_Pago.objects.get(nombre_metodo_pago = "Efectivo")
     
     #print(precio)
     montoIVA = 0
