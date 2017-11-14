@@ -174,10 +174,12 @@ def cargaVenta(request):
     num_caja = parametros[2].strip()
     id = parametros[3].strip()
     observaciones = parametros[4].strip()
+    tipo_tarjeta = parametros[5].strip()
     #print('producto: ' +  nom_producto)
     #print('caja: ' + num_caja)
     #print('precio: ' +precio)
     #print('id: ' +id)
+    print('tipo_tarjeta: ' +tipo_tarjeta)
     
     #obtengo la caja de la tabla
     caja = models.Caja.objects.get(id = num_caja)
