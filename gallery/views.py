@@ -200,10 +200,11 @@ def cargaVenta(request):
     if(observaciones == "pago_tarjeta"):
         metodoPago = models.Metodo_de_Pago.objects.get(id = 2)
         pre =  int(precio_param)
-        print("precio_param_: " + str(pre))
+        #print("precio_param_: " + str(pre))
         imp =  impuesto.first().porcentaje_impuesto
-        print("imp_param_: " + str(imp))
-        precio_sin_iva = (100-imp) * pre / 100
+        #print("imp_param_: " + str(imp))
+        precio_sin_iva =  pre/(imp/100+1)
+        #print("precio_sin_iva: " + str(precio_sin_iva))
     else:
         precio_sin_iva = 0+precio.first().precio_sin_iva
         metodoPago = models.Metodo_de_Pago.objects.get(nombre_metodo_pago = "Efectivo")
