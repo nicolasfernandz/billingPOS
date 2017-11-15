@@ -132,10 +132,10 @@
       <div class="btn-group " data-toggle="buttons">
       
   <label class="btn btn-primary">
-    <input type="radio" name="card_type" id="option1" autocomplete="off" value="Debito"> Debito
+    <input type="radio" name="card_type" id="option1" autocomplete="off" value="Tarjeta Debito"> Debito
   </label>
   <label class="btn btn-primary">
-    <input type="radio" name="card_type" id="option2" autocomplete="off" value="Credito"> Credito
+    <input type="radio" name="card_type" id="option2" autocomplete="off" value="Tarjeta Credito"> Credito
   </label>
   
 </div></div>
@@ -313,13 +313,13 @@ function guardarDatos(url, precio, id, observaciones){
 	$('#pago_tarjeta').modal('hide');
 	
 	var radios = document.getElementsByName('card_type');
-	var tipo_tarjeta;
+	var tipo_tarjeta = "Efectivo";
 	for (var i = 0, length = radios.length; i < length; i++)
 	{
 	 if (radios[i].checked)
 	 {
 	  // do whatever you want with the checked radio
-	  alert(radios[i].value);
+	  //alert(radios[i].value);
 	  tipo_tarjeta = radios[i].value
 	  // only one radio can be logically checked, don't check the rest
 	  break;

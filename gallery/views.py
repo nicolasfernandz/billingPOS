@@ -209,7 +209,8 @@ def cargaVenta(request):
         #print("precio_sin_iva: " + str(precio_sin_iva))
     else:
         precio_sin_iva = 0+precio.first().precio_sin_iva
-        metodoPago = models.Metodo_de_Pago.objects.get(nombre_metodo_pago = "Efectivo")
+    
+    metodoPago = models.Metodo_de_Pago.objects.get(nombre_metodo_pago = tipo_tarjeta)
     
     #print(precio)
     montoIVA = 0
