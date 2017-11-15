@@ -132,10 +132,10 @@
       <div class="btn-group " data-toggle="buttons">
       
   <label class="btn btn-primary">
-    <input type="radio" name="card_type" id="option1" autocomplete="off" value="Tarjeta Debito"> Debito
+    <input type="radio" name="card_type" id="tarjeta_debito" autocomplete="off" value="Tarjeta Debito" > Debito
   </label>
   <label class="btn btn-primary">
-    <input type="radio" name="card_type" id="option2" autocomplete="off" value="Tarjeta Credito"> Credito
+    <input type="radio" name="card_type" id="tarjeta_credito" autocomplete="off" value="Tarjeta Credito"> Credito
   </label>
   
 </div></div>
@@ -287,7 +287,8 @@ function guardarDatosAux(url, precio, id, observaciones){
 
 	if(caja == 'caja_abierta'){
 	if(observaciones == 'pago_tarjeta'){
-		
+		 document.getElementById('value_monto').value = "";
+		 
 		 $('#pago_tarjeta').modal('show');
 		 $(document).ready(function () {
 			    $("button[id=btn_venta]").on('click', function (e) {
