@@ -314,7 +314,7 @@ function guardarDatos(url, precio, id, observaciones){
 	$('#pago_tarjeta').modal('hide');
 	
 	var radios = document.getElementsByName('card_type');
-	var tipo_tarjeta = "Efectivo";
+	var tipo_tarjeta = "Tarjeta Debito";
 	for (var i = 0, length = radios.length; i < length; i++)
 	{
 	 if (radios[i].checked)
