@@ -19,6 +19,16 @@ urlpatterns = [
         #Cierre/[CierreID] 
     url(r'^cierre-(?P<cierre_id>[0-9]+)$', views.verCierre),
     
+    
+    
+    #CierreToPDF/[CierreID] 
+    url(r'^cierreToPDF/(?P<cierre_id>[0-9]+)$', views.verCierreToPDF),
+    
+    #CierreToPrint/[CierreID] 
+    url(r'^cierreToPrint/(?P<cierre_id>[0-9]+)$', views.verCierreImprimir),
+    
+    
+    
         #Cierre/[CierreID] 
     url(r'^caja-(?P<caja_id>[0-9]+)$', views.verCierreX),
     

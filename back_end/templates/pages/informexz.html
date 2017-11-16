@@ -101,7 +101,7 @@
                 </div>
                 <div class="col-xs-12 col-md-3 col-lg-3">
 					<input id="verInformeZ" type="submit" class="btn btn-outline btn-primary btn-lg" value="Imprimir" data-toggle="tooltip" data-placement="left" title="Visualizar el informe de cierre de caja."/>
-                    <input id="verInformeZ" type="submit" class="btn btn-outline btn-success btn-lg" value="Descargar" data-toggle="tooltip" data-placement="left" title="Visualizar el informe de cierre de caja."/>
+                    <input id="verInformeZ" type="submit" class="btn btn-outline btn-success btn-lg" value="Descargar" data-toggle="tooltip" data-placement="left" title="Visualizar el informe de cierre de caja." href="/cierreToPDF/1"/>
                 </div>
             </div>
         </div>
@@ -162,4 +162,24 @@
 {% block encabezado %}
 
 </body>
+
+
+<script type="text/javascript">
+
+$(function(){
+    $('form').on('descargar', function(e){
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            success: function(data){ $('#target').html(data) }
+        });
+    });
+});
+
+
+</script>
+
+
+
 {% endblock %}

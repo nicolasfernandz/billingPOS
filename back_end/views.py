@@ -3,12 +3,11 @@ from gallery.models import *
 from gallery.forms import *
 from gallery.views import *
 from gallery.urls import *
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, response
 
+#imports para Roles y Permisos
 from django.contrib.auth.decorators import login_required
 from rolepermissions.decorators import has_role_decorator
-# Create your views here.
-
 from django.contrib.auth import logout as auth_logout
 
 from back_end.models import Utilities
@@ -17,6 +16,14 @@ from django.shortcuts import *
 from datetime import datetime
 from _overlapped import NULL
 from test.test_dis import simple
+from lib2to3.fixes.fix_input import context
+from fileinput import filename
+from pip import download
+
+
+#Print to PDF
+#https://www.codingforentrepreneurs.com/blog/html-template-to-pdf-in-django/
+#pip install --pre xhtml2pdf
 
 def logout(request):
     auth_logout(request)
@@ -145,10 +152,14 @@ def verVenta (request, venta_id):
 
 from django.db.models import Count, Min, Sum, Avg
 
+
+
+
+
+        
 @login_required  
 @has_role_decorator('contador')
 def verCierre (request, cierre_id):
-    
     cierre = Cierres.objects.get(id=cierre_id)
     
     row=execQuery.getTicketsByOpeningBoxNumber(cierre.AperturaCaja.id)
@@ -173,6 +184,115 @@ def verCierre (request, cierre_id):
     } 
     
     return render(request, 'pages/informexz.html', context)
+
+#Comienzo PDF
+from django.views.generic import View
+from Bar7a.utils import render_to_pdf
+from django.template.loader import get_template
+
+@login_required  
+@has_role_decorator('contador')
+def verCierreToPDF(request, cierre_id, *args, **kwargs):
+    #Code para obtener datos del context
+    cierre = Cierres.objects.get(id=cierre_id)
+    row=execQuery.getTicketsByOpeningBoxNumber(cierre.AperturaCaja.id)
+    cierre.ticketDesde = row[0][1]
+    cierre.ticketHasta = row[0][2]
+    cierre.productosVendidos = row[0][3]
+    class SimpleClass(object):
+        pass
+    simpleList  = []
+    for rows in execQuery.getSalesProductsCountsByOpeningBoxNumber(cierre.AperturaCaja.id):
+        x = SimpleClass()
+        x.nombre = rows[0]
+        x.cantidad = rows[1]
+        simpleList.append(x)
+        print (rows)
+    context = {
+        'informe': cierre,
+        'productosVendidos': simpleList,
+    } 
+
+    template = get_template ('pages/informexz_PDF.html')
+    html = template.render(context)
+    pdf = render_to_pdf('pages/informexz_PDF.html', context)
+    if pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = "InformeX_cierre%s.pdf" %(cierre_id)
+        content = "inline; filename='%s'" %(filename)
+        download = request.GET.get("download")
+        response['content-Disposition'] = content
+        return response
+    else:
+        return HttpResponse("Not Found")  
+
+
+
+import csv
+
+@login_required  
+@has_role_decorator('contador')
+def verCierreImprimir(request, cierre_id):
+    response = HttpResponse(content_type='text/csv')
+
+    filename = "InformeX_cierre%s.csv" %(cierre_id)
+    response['Content-Disposition'] = 'attachment; filename="%s"' %(filename)
+    
+    writer = csv.writer(response)
+
+    #Code para obtener datos del context
+    cierre = Cierres.objects.get(id=cierre_id)
+    row=execQuery.getTicketsByOpeningBoxNumber(cierre.AperturaCaja.id)
+    cierre.ticketDesde = row[0][1]
+    cierre.ticketHasta = row[0][2]
+    cierre.productosVendidos = row[0][3]
+    class SimpleClass(object):
+        pass
+    simpleList  = []
+    for rows in execQuery.getSalesProductsCountsByOpeningBoxNumber(cierre.AperturaCaja.id):
+        x = SimpleClass()
+        x.nombre = rows[0]
+        x.cantidad = rows[1]
+        simpleList.append(x)
+        print (rows)
+    
+    writer.writerow(['Detalle de Facturacion'])
+    writer.writerow(['******************'])
+    
+    writer.writerow(['Fechas'])
+    writer.writerow(['Desde:; %s' %( cierre.AperturaCaja.fecha_apertura_Caja.strftime('%Y-%m-%d %H:%M:%S') )])
+    writer.writerow(['Hasta:; %s' %(cierre.AperturaCaja.fecha_cierre_Caja.strftime('%Y-%m-%d %H:%M:%S') )])
+    
+    writer.writerow([""])
+    writer.writerow(['Caja:'])
+    writer.writerow(['Nro de Caja:; %s' %(cierre.AperturaCaja.Caja.id)])
+    writer.writerow(['Ubicacion:; %s' %(cierre.AperturaCaja.Caja.ubicacion)])
+    
+    writer.writerow([""])
+    writer.writerow(['Totales:'])
+    writer.writerow(['IVA:; %s %%' %(cierre.monto_iva)])
+    writer.writerow(['Sub Total:; %s' %(cierre.total_sin_iva)])
+    writer.writerow(['Total:; %s' %(cierre.total)])
+    
+    writer.writerow([""])
+    writer.writerow(['Tickets:'])
+    writer.writerow(['Desde Ticket Nro:; %s' %(cierre.ticketDesde)])
+    writer.writerow(['Hasta Ticket Nro:; %s' %(cierre.ticketHasta)])
+
+    writer.writerow([""])    
+    writer.writerow(['Productos Vendidos:'])
+    writer.writerow(['Cantidad:; %s' %(cierre.productosVendidos)])
+    
+    writer.writerow([""])
+    writer.writerow(['Detalle Productos Vendidos'])
+    writer.writerow(['Producto; Cantidad'])
+    for productosVendidos in simpleList:
+        writer.writerow([ "%s ; %s" %(productosVendidos.nombre, productosVendidos.cantidad) ])
+    
+    return response
+
+
+
 
 @login_required  
 @has_role_decorator('contador')
