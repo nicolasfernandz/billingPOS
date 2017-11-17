@@ -178,35 +178,20 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-      <h5>Pago Tarjeta</h5>
+      <h5>Cierre Caja</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       
-       <div class="row">
-       <div class="col align-self-center">
-      
-      <div class="btn-group" data-toggle="buttons">
-      
-  <label class="btn btn-primary">
-    <input type="radio" name="options" id="option1" autocomplete="off" > Debito
-  </label>
-  <label class="btn btn-primary">
-    <input type="radio" name="options" id="option2" autocomplete="off"> Credito
-  </label>
-  
-</div></div>
-</div>
       <div class="modal-body">
        
-  		<strong>Ingrese monto</strong>
-  		<input type="number" id="value_monto"></input>
+  		<strong>¿Seguro que desea cerrar la caja?</strong>
 		 
       </div>
      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-success" id="btn_venta">Realizar Venta</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-success" id="btn_ok_cierre">Si</button>
       </div>
     </div>
   </div>
@@ -403,6 +388,33 @@ function guardarDatos(url, precio, id, observaciones){
 	}
      
 }
+
+function abrirCerrarCajaAux(){
+	var clase = document.getElementById('abrirCerrarCaja').value;
+	
+	if(clase == 'Cerrar Caja'){
+		
+		 $('#confirmacion_cierre_caja').modal('show');
+		 $(document).ready(function () {
+			    $("button[id=btn_ok_cierre]").on('click', function (e) {
+			    	abrirCerrarCaja();
+			    	 //alert(value);
+			    	$('#confirmacion_cierre_caja').modal('hide');
+			    
+			    });
+			    
+			});
+
+		
+    	 
+		
+	}else{
+		
+		abrirCerrarCaja();
+	}	
+	
+	
+}
 function abrirCerrarCaja(){
 	$.ajaxSetup({ 
 	     beforeSend: function(xhr, settings) {
@@ -430,7 +442,8 @@ function abrirCerrarCaja(){
 	var clase = document.getElementById('abrirCerrarCaja').value;
 	var caja = document.getElementById('num_caja').value;
 	if(clase == 'Cerrar Caja'){
-		
+
+	
 		$.ajax({
 	         type: "POST",
 	         url: "/billingPOS/ventas/cierreCaja/",
@@ -538,7 +551,7 @@ function abrirCerrarCaja(){
 		</div>
 		<a class="navbar-brand" href="/logout">Salir</a>
 		 
-		<input id="abrirCerrarCaja" type="button" class="btn btn-success" value="Abrir Caja" onclick="abrirCerrarCaja();" />
+		<input id="abrirCerrarCaja" type="button" class="btn btn-success" value="Abrir Caja" onclick="abrirCerrarCajaAux();" />
 	</nav>
 
 	<!-- Nicolas: aca estaba la clase container y ademas agregamos el div col-sm-12-->
