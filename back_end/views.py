@@ -58,43 +58,26 @@ def login_success(request):
         #return render(request, 'pages/home.html', context)
         return redirect("/back_end/home", context)
 
-@login_required    
-def home2(request):
-    all_lineaVentas = Linea_Venta.objects.all().order_by('-id')
-    context = {
-        'all_lineaVentas': all_lineaVentas,
-    } 
-    return render(request, 'pages/home.html', context)
-
-
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required    
 def home(request):
-    all_lineaVentas = Linea_Venta.objects.all().order_by('-id')
+                           
+    today = datetime.today()
+    first_day = today.replace(day=1)
+    print(first_day.month)
+    print(first_day.strftime('%B'))
+        
     
-    paginator = Paginator(all_lineaVentas, 10) # Show 10 sale per page
+    all_lineaVentas = Linea_Venta.objects.filter(Venta__fecha__gte=first_day).order_by('-id')
     
-    page = request.GET.get('page')
-    
-    try:
-        contacts = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        contacts = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        contacts = paginator.page(paginator.num_pages)
-
-    return render(request, 'pages/home.html', {'all_lineaVentas': contacts})
-    
-    '''
     context = {
+        'month': first_day.strftime('%B'),
         'all_lineaVentas': all_lineaVentas,
     } 
+    
     return render(request, 'pages/home.html', context)
-    '''
 
+'''
 @login_required 
 @has_role_decorator('encargado')
 def listarVentas(request):
@@ -103,12 +86,13 @@ def listarVentas(request):
         'all_ventas': all_ventas,
     } 
     return render(request, 'pages/ventas.html', context)
-
+'''
 from django.core.exceptions import MultipleObjectsReturned
 
 @login_required 
 @has_role_decorator('encargado')
 def informe_x(request):
+    #Se hace una busqueda ALL porque las cajas en este sistema, siempre seran relativamente pocas.
     all_cajas = Caja.objects.all().order_by('id')
     for caja in all_cajas:
         try:
@@ -341,7 +325,7 @@ def verCierreX(request, caja_id):
 @login_required  
 @has_role_decorator('contador')
 def verEstadoCajas (request):
-    
+    #Se hace una busqueda ALL porque las cajas en este sistema, siempre seran relativamente pocas.
     all_cajas = Caja.objects.all().order_by('id')
     for caja in all_cajas:
         try:

@@ -6,7 +6,7 @@ urlpatterns = [
     url(r'^$', views.home, name = 'home'),    
     url(r'^home', views.home, name='Home'),
     
-    url(r'^listarVentas', views.listarVentas, name = 'listarVentas'),
+    #url(r'^listarVentas', views.listarVentas, name = 'listarVentas'),
     
     url(r'^informe_x', views.informe_x, name = 'Informe X'),
     
