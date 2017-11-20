@@ -53,5 +53,7 @@ urlpatterns = [
     url(r'^ventasPorProductoPorFechas/', views.ventasPorProductoPorFechas, name = 'Ventas por productos por fechas'),
     
     url(r'^rreporte_ventas_producto_fecha', views.reporte_ventas_producto_fecha, name = 'Ventas por productos por fechas'),
+    
+    url(r'^verInformesZPorFechas/', views.verInformesZPorFechas, name = 'Ver Informes Z por fechas'),
 
 ]

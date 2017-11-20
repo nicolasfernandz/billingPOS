@@ -63,10 +63,7 @@ def login_success(request):
 def home(request):
                            
     today = datetime.today()
-    first_day = today.replace(day=1)
-    print(first_day.month)
-    print(first_day.strftime('%B'))
-        
+    first_day = today.replace(day=1)        
     
     all_lineaVentas = Linea_Venta.objects.filter(Venta__fecha__gte=first_day).order_by('-id')
     
@@ -116,11 +113,63 @@ def informe_x(request):
 @login_required 
 @has_role_decorator('encargado')
 def informe_z(request):
-    all_cierres = Cierres.objects.all().order_by('-id')
+                               
+    today = datetime.today()
+    #all_cierres = Cierres.objects.filter().order_by('-id')
+    #all_cierres = Cierres.objects.filter(fechaCierre__gte=today).order_by('-id')
+    all_cierres = Cierres.objects.filter(fechaCierre__year=today.year, fechaCierre__month=today.month, fechaCierre__day=today.day).order_by('-id')
+    
     context = {
         'all_cierres': all_cierres,
     } 
     return render(request, 'pages/informe_z.html', context)
+
+@login_required 
+@has_role_decorator('encargado')
+def verInformesZPorFechas(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = VentasPorFechasForm(request.POST)
+        print(form)
+        
+        errors = []
+        error = False
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # redirect to a new URL:
+            fecha_desde = form.cleaned_data['fecha_desde']
+            fecha_hasta = form.cleaned_data['fecha_hasta']
+                        
+            from datetime import datetime
+            
+            dtDesde = datetime.strptime(fecha_desde, "%d/%m/%Y")
+            dtHasta = datetime.strptime(fecha_hasta, "%d/%m/%Y")
+
+            class SimpleClass(object):
+                pass    
+            
+            x = SimpleClass()
+            x.fechaDesde = fecha_desde
+            x.fechaHasta = fecha_hasta
+            
+            if dtDesde == dtHasta:
+                all_cierres = Cierres.objects.filter(fechaCierre__year=dtDesde.year, fechaCierre__month=dtDesde.month, fechaCierre__day=dtDesde.day).order_by('-id')
+            else:
+                all_cierres = Cierres.objects.filter(fechaCierre__range=(dtDesde, dtHasta)).order_by('-id')
+            
+            if all_cierres.count() <= 0:
+                errors.append("No se han encontrado datos para las fechas ingresadas.")
+                                                         
+            if not error:
+                return render(request, 'pages/informe_z.html', {'errors': errors, 'all_cierres': all_cierres,
+                                                                              'fechas': x})
+                            
+        else:
+            errors.append("Problemas con el formulario, comuniquese con el administrador.")
+            return render(request, 'pages/informe_z.html', {'errors': errors})
+
 
 @login_required  
 @has_role_decorator('contador')
