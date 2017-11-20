@@ -19,6 +19,7 @@ from test.test_dis import simple
 from lib2to3.fixes.fix_input import context
 from fileinput import filename
 from pip import download
+import logging
 
 
 #Print to PDF
@@ -96,6 +97,10 @@ def informe_x(request):
             aperturaCajaAbierta = AperturaCaja.objects.filter(Caja=caja, fecha_cierre_Caja__isnull=True)
         except MultipleObjectsReturned:
             print("Error, se obtuvieron mas de 1 caja abierta.")
+        except:
+            logger = logging.getLogger(__name__)
+            logger.debug('Something went wrong!')
+            print("")
         else:
             if aperturaCajaAbierta is not NULL and aperturaCajaAbierta.count() > 0:
                 caja.estado = 'ABIERTA' 
