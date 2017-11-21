@@ -199,7 +199,6 @@ from django.db.models import Count, Min, Sum, Avg
 @has_role_decorator('contador')
 def verCierre (request, cierre_id):
     cierre = Cierres.objects.get(id=cierre_id)
-    
     row=execQuery.getTicketsByOpeningBoxNumber(cierre.AperturaCaja.id)
     cierre.ticketDesde = row[0][1]
     cierre.ticketHasta = row[0][2]
@@ -250,7 +249,7 @@ def verCierreToPDF(request, cierre_id, *args, **kwargs):
         'informe': cierre,
         'productosVendidos': simpleList,
     } 
-
+    
     template = get_template ('pages/informexz_PDF.html')
     html = template.render(context)
     pdf = render_to_pdf('pages/informexz_PDF.html', context)
@@ -292,7 +291,6 @@ def verCierreImprimir(request, cierre_id):
         x.nombre = rows[0]
         x.cantidad = rows[1]
         simpleList.append(x)
-        print (rows)
     
     writer.writerow(['Detalle de Facturacion'])
     writer.writerow(['******************'])
