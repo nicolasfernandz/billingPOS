@@ -226,11 +226,30 @@ def cargaVenta(request):
         #if(observaciones != "pago_tarjeta"):
         linea_venta = models.Linea_Venta.objects.create(PreciosProductoFecha=prec_prod, ImpuestosProductoFecha =imp_prod , Venta = venta)
     
-    
+        #Juan Trabajando en esto
+        #cargaVentaPrint(request, venta)
     
     #Revisar 
     #models.Linea_Venta.objects.create(Producto = producto, Venta = venta)
+    
     return HttpResponse(json.dumps('ventaExitosa'), content_type="application/json")
+
+
+def cargaVentaPrint(request, venta):
+    response = HttpResponse(content_type='text/csv')
+    print("Imprimiendo")
+    filename = "venta_Caja_%s_%s.csv" %(venta.AperturaCaja.Caja.id, venta.fecha.strftime('%Y-%m-%d %H:%M:%S'))
+    response['Content-Disposition'] = 'attachment; filename="%s"' %(filename)
+    
+    writer = csv.writer(response)
+    
+    
+    writer.writerow(['Venta'])
+    writer.writerow(['******************'])
+    print("response")
+    print(response)
+    return response
+
 
 
 def some_view(request):

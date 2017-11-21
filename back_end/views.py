@@ -244,7 +244,6 @@ def verCierreToPDF(request, cierre_id, *args, **kwargs):
         x.nombre = rows[0]
         x.cantidad = rows[1]
         simpleList.append(x)
-        print (rows)
     context = {
         'informe': cierre,
         'productosVendidos': simpleList,

@@ -14,4 +14,7 @@ urlpatterns = [
     url(r'ventas/checkCaja/', views.checkCaja, name = 'checksCaja'),
     
     url(r'^logout', views.logout),
+    
+    
+     url(r'ventas/cargaVentaPrint/', views.cargaVentaPrint, name = 'cargaVenta'),
 ]
