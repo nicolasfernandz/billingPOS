@@ -397,7 +397,7 @@ function abrirCerrarCajaAux(){
 		 $('#confirmacion_cierre_caja').modal('show');
 		 $(document).ready(function () {
 			    $("button[id=btn_ok_cierre]").on('click', function (e) {
-			    	abrirCerrarCaja();
+			    	abrir_cerrar_caja();
 			    	 //alert(value);
 			    	$('#confirmacion_cierre_caja').modal('hide');
 			    
@@ -409,13 +409,14 @@ function abrirCerrarCajaAux(){
     	 
 		
 	}else{
-		
-		abrirCerrarCaja();
+		if(clase == 'Abrir Caja'){
+			abrir_cerrar_caja();
+		}
 	}	
 	
 	
 }
-function abrirCerrarCaja(){
+function abrir_cerrar_caja(){
 	$.ajaxSetup({ 
 	     beforeSend: function(xhr, settings) {
 	         function getCookie(name) {
