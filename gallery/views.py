@@ -228,14 +228,14 @@ def cargaVenta(request):
     
         #Juan Trabajando en esto
         #cargaVentaPrint(request, venta)
-    
+        cargaVentaPrintPDF(request, venta)
     #Revisar 
     #models.Linea_Venta.objects.create(Producto = producto, Venta = venta)
     
     return HttpResponse(json.dumps('ventaExitosa'), content_type="application/json")
 
 
-def cargaVentaPrint(request, venta):
+def cargaVentaPrintExcel(request, venta):
     response = HttpResponse(content_type='text/csv')
     print("Imprimiendo")
     filename = "venta_Caja_%s_%s.csv" %(venta.AperturaCaja.Caja.id, venta.fecha.strftime('%Y-%m-%d %H:%M:%S'))
@@ -251,6 +251,31 @@ def cargaVentaPrint(request, venta):
     return response
 
 
+from django.views.generic import View
+from Bar7a.utils import render_to_pdf
+from django.template.loader import get_template
+
+@login_required  
+@has_role_decorator('barman')
+def cargaVentaPrintPDF(request,*args, **kwargs):
+    #Code para obtener datos del context
+    context = {
+    #    'venta' : venta
+    } 
+    
+    template = get_template ('gallery/invoicePDF.html')
+    html = template.render(context)
+    pdf = render_to_pdf('gallery/invoicePDF.html', context)
+    if pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        #filename = "invoice_%s_%s.pdf" %(venta.AperturaCaja.Caja.id, venta.fecha.strftime('%Y-%m-%d %H:%M:%S'))
+        filename = "invoice_%s.pdf" %("11")
+        content = "inline; filename='%s'" %(filename)
+        download = request.GET.get("download")
+        response['content-Disposition'] = content
+        return response
+    else:
+        return HttpResponse("Not Found")  
 
 def some_view(request):
     

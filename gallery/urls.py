@@ -16,5 +16,7 @@ urlpatterns = [
     url(r'^logout', views.logout),
     
     
-     url(r'ventas/cargaVentaPrint/', views.cargaVentaPrint, name = 'cargaVenta'),
+    url(r'ventas/cargaVentaPrintExcel/', views.cargaVentaPrintExcel, name = 'cargaVenta Excel'),
+    
+    url(r'ventas/cargaVentaPrintPDF/', views.cargaVentaPrintPDF, name = 'cargaVenta PDF'),
 ]
