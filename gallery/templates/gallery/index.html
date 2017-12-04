@@ -397,16 +397,18 @@ function abrirCerrarCajaAux(){
 		 $('#confirmacion_cierre_caja').modal('show');
 		 $(document).ready(function () {
 			    $("button[id=btn_ok_cierre]").on('click', function (e) {
+			    	var clase = document.getElementById('abrirCerrarCaja').value;
+			    	
+			    	if(clase == 'Cerrar Caja'){
 			    	abrir_cerrar_caja();
 			    	 //alert(value);
 			    	$('#confirmacion_cierre_caja').modal('hide');
-			    
+			    	}
+			   return;
 			    });
-			    
+			   
 			});
 
-		
-    	 
 		
 	}else{
 		if(clase == 'Abrir Caja'){
@@ -485,6 +487,7 @@ function abrir_cerrar_caja(){
 	document.getElementById('abrirCerrarCaja').className = 'btn btn-success';
 	document.getElementById('abrirCerrarCaja').value = 'Abrir Caja'; 
 	document.getElementById('apertura_caja').value = 'caja_cerrada';
+	return;
 	}else{
 	
 	if(clase == 'Abrir Caja'){
@@ -534,6 +537,11 @@ function abrir_cerrar_caja(){
 		}
 	}
 }
+
+
+
+
+
 
 </script>
 <body onload="checkCaja()">
