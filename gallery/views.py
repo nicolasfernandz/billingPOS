@@ -3,6 +3,7 @@ from django.conf.urls import url
 from django.views.generic import TemplateView
 from django.conf import settings
 from gallery.models import *
+from back_end.models import *
 from .forms import *
 import os
 from gallery import models
@@ -228,7 +229,7 @@ def cargaVenta(request):
     
         #Juan Trabajando en esto
         #cargaVentaPrint(request, venta)
-        cargaVentaPrintPDF(request, venta)
+        #cargaVentaPrintPDF(request, venta)
     #Revisar 
     #models.Linea_Venta.objects.create(Producto = producto, Venta = venta)
     
@@ -259,10 +260,12 @@ from django.template.loader import get_template
 @has_role_decorator('barman')
 def cargaVentaPrintPDF(request,*args, **kwargs):
     #Code para obtener datos del context
+    venta = Venta.objects.latest(field_name="id")
+    all_linea_venta = Linea_Venta.objects.filter(Venta=venta)
     context = {
-    #    'venta' : venta
+        'all_linea_venta' : all_linea_venta,
+        'venta' : venta
     } 
-    
     template = get_template ('gallery/invoicePDF.html')
     html = template.render(context)
     pdf = render_to_pdf('gallery/invoicePDF.html', context)

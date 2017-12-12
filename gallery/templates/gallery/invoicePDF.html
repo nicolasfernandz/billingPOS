@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		<title>Factura 7A-Bar</title>
 		<style type="text/css">
+			
 			body {
 			    font-weight: 200;
 			    font-size: 14px;
@@ -35,60 +36,115 @@
 			    color: #333; /* old IE */
 			    background-color: #fff; /* Modern Browsers */
 			}
+			.tablaConsumoFinal{
+			    border: 1px solid black;
+			    text-align: center;
+			    valign: middle;
+			}
+			.div-Adenda{
+			    border-bottom:1px solid #000;
+			    line-height:16px;
+			    text-align:center;
+			}
+			.span-Adenda{
+			    background:#FFF;
+			    position:relative;
+			    bottom:-8px;
+			    padding:0 15px;
+			}
+			
 		</style>
 	</head>
 	<body>
  	<div class='wrapper'>
 		<div class='header'>
-        	<p class='title'>Invoice # </p>
+        	<p class='title'>7A-Bar - Factura {{venta.id}} # </p>
      	</div>
  		<div>
   			<div class="panel panel-default height">
-				<div class="panel-heading">Detalle de Facturación</div>
+				<div class="panel-heading"></div>
 					<div class="panel-body">
-						<strong>Fechas:</strong><br>
-						<strong>Desde:</strong> <br>
-						<strong>Hasta:</strong> <br>
-						<br>
-						<strong>Caja:</strong><br>
-						<strong>Nº de Caja:</strong> <br>
-						<strong>Ubicación:</strong> <br>
-						<br> 
-						<strong>Totales:</strong><br>
-						<strong>IVA:</strong> <br>
-						<strong>Sub Total:</strong> <br>
-						<strong>Total:</strong> <br>
-						<br>
-						<strong>Tickets:</strong><br>
-						<strong>Desde Ticket Nº:</strong> <br>
-						<strong>Hasta Ticket Nº:</strong><br>
-						<br>
-						<strong>Productos Vendidos:</strong><br>
-						<strong>Cantidad:</strong><br>
-						<br>
-						<strong>Detalle Productos Vendidos:</strong><br>
+						<strong>7A Bar SA </strong><br>
+						<strong>RUT: XXXXXXXXXXX</strong> <br>
+						<strong>Calle Trasnfiguración Iturra XXX</strong> <br>
+						<strong>Pando, Departamento de Canelones</strong> <br>
+						<strong>Tel: 2292 1173</strong> <br>
 						
+						<div class="table-responsive">
+                 				<table class="table table-condensed">
+									<thead>
+										<tr>
+											<td><strong>e-TICKET</strong></td>
+											<td></td>
+										</tr>
+									</thead>
+									<tbody>	
+										<tr>						
+											<td><strong>AA-12345</strong></td>
+											<td>Fecha: {{venta.fecha}}</td>
+										</tr>
+										<tr>
+											<td class="text-center"> <strong>CONTADO</strong> </td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+					</div>
+					<div class="panel-body">
+						<table class="tablaConsumoFinal">
+								<tbody>
+									<tr>
+										<td><h1>Consumo Final</h1></td>
+									</tr>
+								</tbody>
+						</table>
+						<br>
+						<strong>Moneda: UYU</strong> <br>
 						<div class="panel-body">
              				<div class="table-responsive">
                  				<table class="table table-condensed">
 									<thead>
 										<tr>
 											<td><strong>Producto</strong></td>
-											<td class="text-center"><strong>Cantidad</strong></td>
+											<td class="text-center"><strong>Precio</strong></td>
 										</tr>
 									</thead>
 									<tbody>
-										
+										{% for linea_venta in all_linea_venta %}
 										<tr>
-											<td></td>
-											<td class="text-center"></td>
+											<td class="text-right">{{linea_venta.PreciosProductoFecha.Producto.nombre}}</td>
+											<td class="text-right">{{linea_venta.PreciosProductoFecha.precio_sin_iva}}</td>
 										</tr>
-										
+										{% endfor %}
 									</tbody>
+								</table>
+								<hr size=1>
+								<table>
+									<tfoot>
+										<tr>
+											<td class="text-center"><strong>Sub Total: </strong></td>
+											<td class="text-right"><strong>{{venta.total_sin_iva}}</strong></td>
+										</tr>
+										<tr>
+											<td class="text-center"><strong>IVA:</strong> </td>
+											<td class="text-right"><strong>{{venta.monto_iva}}</strong></td>
+										</tr>
+										<tr>
+											<td class="text-center"><strong>Total:</strong> </td>
+											<td class="text-right"><strong>{{venta.total}}</strong></td>
+										</tr>
+									</tfoot>
 								</table>
 							</div>
 						</div>
-						
+						<br>
+						<div>
+						 	<h2><strong>------------------------ Adenda -------------------------</strong></h2>
+							<strong>Caja: {{venta.AperturaCaja.Caja.Descripcion}}</strong><br>
+							<h2><strong>---------------------- Fin Adenda ----------------------</strong></h2><br>
+						</div>								   	
 					</div>
 				</div>
 			</div>                     
